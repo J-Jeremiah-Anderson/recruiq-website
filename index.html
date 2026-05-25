@@ -1,0 +1,1539 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RecruIQ — The AI Brain Behind Your Best Hires</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none';">
+<link rel="icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="theme-color" content="#C96442">
+<meta name="description" content="Source, assess, and hire 3× faster with AI. Built for recruiters in India. AI candidate matching, skill assessments, and automated outreach.">
+<meta property="og:title" content="RecruIQ — The AI Brain Behind Your Best Hires">
+<meta property="og:description" content="Source, assess, and hire 3× faster with AI. Built for recruiters in India.">
+<meta property="og:image" content="https://recru-iq.com/og-image.png">
+<meta property="og:url" content="https://recru-iq.com">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RecruIQ — AI Recruitment Intelligence">
+<meta name="twitter:description" content="Source, assess, and hire 3× faster with AI. Built for Indian SMBs.">
+<meta name="twitter:image" content="https://recru-iq.com/og-image.png">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* ===== Home page-specific styles ===== */
+
+/* Hero */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  padding: 160px 0 80px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+#particles {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+}
+.hero .aurora.coral { width: 720px; height: 720px; top: -140px; left: -200px; }
+.hero .aurora.indigo { width: 640px; height: 640px; top: 80px; right: -160px; opacity: 0.35; }
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.hero h1 {
+  font-size: clamp(3rem, 6.6vw, 5.5rem);
+  letter-spacing: -0.035em;
+  line-height: 1;
+  margin-bottom: 28px;
+}
+
+.hero .lead {
+  font-size: 19px;
+  max-width: 520px;
+  margin-bottom: 36px;
+  color: var(--text-dim);
+}
+
+.hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 56px; }
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px 6px 6px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 32px;
+}
+.hero-eyebrow .tag {
+  background: linear-gradient(135deg, var(--coral), #e07a55);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  color: white;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.06em;
+}
+
+/* Hero mockup */
+.mockup {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1.05;
+  perspective: 1200px;
+}
+
+.float-card {
+  position: absolute;
+  background: rgba(15, 15, 18, 0.78);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow:
+    0 20px 60px -20px rgba(0,0,0,0.8),
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 0 80px -20px rgba(201, 100, 66, 0.3);
+  animation: float 8s ease-in-out infinite;
+}
+
+.fc-pipeline {
+  top: 0; left: 0;
+  width: 66%;
+  padding: 18px;
+  z-index: 2;
+}
+.fc-report {
+  bottom: 0; right: 0;
+  width: 62%;
+  padding: 18px;
+  animation-delay: -3s;
+  z-index: 1;
+  box-shadow:
+    0 20px 60px -20px rgba(0,0,0,0.8),
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 0 80px -20px rgba(99, 102, 241, 0.32);
+}
+.fc-mini {
+  top: 48%; left: 8%;
+  width: 230px;
+  padding: 14px;
+  animation-delay: -5s;
+  display: none;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotateX(0) rotateY(0); }
+  50% { transform: translateY(-14px) rotateX(0.5deg) rotateY(-0.5deg); }
+}
+
+.fc-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px;
+}
+.fc-head .ttl {
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+}
+.fc-head .dots { display: flex; gap: 4px; }
+.fc-head .dots span {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+}
+
+.pipe-cols {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
+}
+.pipe-col {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 8px;
+}
+.pipe-col-h {
+  font-size: 9px;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+  margin-bottom: 10px;
+  display: flex; justify-content: space-between;
+}
+
+.cand {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cand-avatar {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--coral) 0%, var(--indigo) 100%);
+  flex-shrink: 0;
+  font-size: 9px;
+  color: white;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 600;
+}
+.cand-name { font-size: 10px; color: var(--text); font-weight: 500; }
+.cand-role { font-size: 8px; color: var(--text-faint); }
+.score-badge {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 3px 7px;
+  border-radius: 6px;
+  background: rgba(201,100,66,0.18);
+  color: var(--coral-bright);
+  border: 1px solid rgba(201,100,66,0.4);
+  box-shadow: 0 0 12px -2px rgba(201,100,66,0.4);
+  font-weight: 600;
+}
+.score-badge.mid { background: rgba(99,102,241,0.18); color: var(--indigo-bright); border-color: rgba(99,102,241,0.4); box-shadow: 0 0 12px -2px rgba(99,102,241,0.4); }
+.score-badge.low { background: rgba(255,255,255,0.05); color: var(--text-faint); border-color: rgba(255,255,255,0.08); box-shadow: none; }
+
+/* Radar chart placeholder */
+.radar {
+  width: 130px; height: 130px;
+  margin: 0 auto 12px;
+}
+.skill-row {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+  font-size: 10px;
+}
+.skill-row .lbl { width: 70px; color: var(--text-dim); }
+.skill-bar {
+  flex: 1; height: 5px; border-radius: 3px;
+  background: rgba(255,255,255,0.06);
+  overflow: hidden;
+  position: relative;
+}
+.skill-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--coral), #ffae8a);
+  box-shadow: 0 0 8px rgba(201,100,66,0.6);
+}
+.skill-row .val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--coral-bright);
+  width: 24px; text-align: right;
+}
+
+/* Mini stats card */
+.mini-stat {
+  display: flex; align-items: center; gap: 10px;
+}
+.mini-stat-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--coral-bright), #ffd0b8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.mini-stat-lbl {
+  font-size: 10px;
+  color: var(--text-faint);
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* === Richer mockup details === */
+.fc-banner {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px;
+  background: linear-gradient(90deg, rgba(201,100,66,0.14), rgba(99,102,241,0.06));
+  border: 1px solid rgba(201,100,66,0.3);
+  border-radius: 10px;
+  margin-bottom: 14px;
+  font-size: 10.5px;
+  color: #f4f4f5;
+}
+.fc-banner .pulse {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--coral-bright);
+  box-shadow: 0 0 0 0 rgba(233,122,82,0.7);
+  animation: pulse-ring 1.8s ease-out infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(233,122,82,0.7); }
+  70% { box-shadow: 0 0 0 8px rgba(233,122,82,0); }
+  100% { box-shadow: 0 0 0 0 rgba(233,122,82,0); }
+}
+.fc-banner .ai-mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--coral-bright);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.fc-banner b { color: white; font-weight: 500; }
+
+.pipe-col-spark {
+  height: 12px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+}
+.pipe-col-spark span {
+  flex: 1;
+  background: linear-gradient(180deg, var(--coral-bright), var(--coral));
+  border-radius: 1px;
+  opacity: 0.55;
+}
+
+.cand {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 6px;
+  position: relative;
+}
+.cand-row {
+  display: flex; align-items: center; gap: 8px;
+}
+.cand-tags {
+  display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap;
+}
+.cand-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  color: var(--text-faint);
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  white-space: nowrap;
+}
+.cand-tag.coral { color: var(--coral-bright); background: rgba(201,100,66,0.08); border-color: rgba(201,100,66,0.25); }
+.cand-tag.ok { color: #6ee7b7; background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.25); }
+.cand-tag.idx { color: var(--indigo-bright); background: rgba(99,102,241,0.08); border-color: rgba(99,102,241,0.25); }
+
+/* Report card extras */
+.fc-report-top {
+  display: flex; align-items: center; gap: 10px;
+  padding-bottom: 12px; border-bottom: 1px solid var(--border); margin-bottom: 12px;
+}
+.fc-report-top .av {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--coral), var(--indigo));
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600; color: white;
+  flex-shrink: 0;
+}
+.fc-report-top .info { flex: 1; min-width: 0; }
+.fc-report-top .name { font-size: 12px; color: var(--text); font-weight: 500; }
+.fc-report-top .meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; color: var(--text-faint);
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+.fc-overall {
+  text-align: right; flex-shrink: 0;
+}
+.fc-overall .num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--coral-bright), #ffd0b8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.fc-overall .lbl {
+  font-size: 8px;
+  color: var(--text-faint);
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin-top: 2px;
+}
+
+.fc-ai-summary {
+  font-size: 10px;
+  color: var(--text-dim);
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-top: 10px;
+  line-height: 1.45;
+  position: relative;
+}
+.fc-ai-summary::before {
+  content: 'AI SUMMARY';
+  position: absolute;
+  top: -7px; left: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  color: var(--coral-bright);
+  background: #0e0e10;
+  padding: 0 6px;
+  letter-spacing: 0.12em;
+}
+
+.fc-badges {
+  display: flex; gap: 4px; flex-wrap: wrap; margin-top: 8px;
+}
+.fc-badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: 9px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.fc-badge.ok { color: #6ee7b7; background: rgba(16,185,129,0.10); border: 1px solid rgba(16,185,129,0.25); }
+.fc-badge.warn { color: #fcd34d; background: rgba(245,158,11,0.10); border: 1px solid rgba(245,158,11,0.25); }
+.fc-badge.coral { color: var(--coral-bright); background: rgba(201,100,66,0.10); border: 1px solid rgba(201,100,66,0.3); }
+
+/* Activity / sourcing card (replaces fc-mini) */
+.fc-activity {
+  position: absolute;
+  top: 52%; left: 6%;
+  width: 245px;
+  padding: 14px;
+  animation: float 8s ease-in-out -5s infinite;
+  z-index: 3;
+}
+.fc-activity .head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--text-faint);
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+.fc-activity .live-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #6ee7b7;
+  box-shadow: 0 0 8px #6ee7b7;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+.fc-activity-row {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 10px; color: var(--text-dim);
+  padding: 6px 0; border-bottom: 1px dashed rgba(255,255,255,0.06);
+}
+.fc-activity-row:last-child { border-bottom: none; }
+.fc-activity-row .ic {
+  width: 18px; height: 18px; border-radius: 4px;
+  background: rgba(201,100,66,0.12);
+  border: 1px solid rgba(201,100,66,0.3);
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--coral-bright);
+}
+.fc-activity-row .ic svg { width: 10px; height: 10px; }
+.fc-activity-row b { color: var(--text); font-weight: 500; }
+.fc-activity-row time {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--text-faint);
+}
+
+/* Pain Points Bar */
+.pain {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 56px 0;
+  background: rgba(255,255,255,0.015);
+}
+.pain-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  align-items: center;
+}
+.pain-item {
+  padding: 0 32px;
+  border-right: 1px solid var(--border);
+}
+.pain-item:last-child { border-right: none; }
+.pain-stat {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2.5rem, 4vw, 3.4rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--coral-bright) 0%, #ffae8a 50%, var(--coral) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+.pain-lbl {
+  font-size: 14px;
+  color: var(--text-dim);
+  max-width: 280px;
+}
+@media (max-width:880px) {
+  .pain-grid { grid-template-columns: 1fr; gap: 32px; }
+  .pain-item { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 24px; }
+  .pain-item:last-child { border-bottom: none; }
+}
+
+/* Workflow sections */
+.workflow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  padding: 60px 0;
+  position: relative;
+}
+.workflow.reverse { direction: rtl; }
+.workflow.reverse > * { direction: ltr; }
+
+.workflow-text h2 { margin-bottom: 20px; margin-top: 14px; }
+.workflow-text p { font-size: 17px; max-width: 540px; }
+
+.workflow-visual {
+  position: relative;
+  aspect-ratio: 1 / 0.95;
+  width: 100%;
+}
+
+/* Workflow A — pipeline */
+.wf-pipeline {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(15,15,18,0.7), rgba(15,15,18,0.4));
+  backdrop-filter: blur(16px);
+  padding: 22px;
+  box-shadow: 0 0 100px -30px rgba(201,100,66,0.4);
+  display: flex; flex-direction: column;
+}
+.wf-pipeline-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 14px; border-bottom: 1px solid var(--border); margin-bottom: 16px;
+}
+.wf-pipeline-h {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+}
+.wf-pipeline-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-faint);
+}
+.wf-cols {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
+  flex: 1;
+}
+.wf-col {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 10px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.wf-col-h {
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 4px;
+}
+.wf-col-h .count {
+  background: rgba(255,255,255,0.06);
+  padding: 2px 6px; border-radius: 4px;
+  color: var(--text);
+}
+.wf-cand {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 11px;
+  transition: transform .3s, border-color .3s;
+}
+.wf-cand:hover { transform: translateY(-2px); border-color: rgba(201,100,66,0.4); }
+.wf-cand-top {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+}
+.wf-cand .name { font-weight: 500; color: var(--text); font-size: 12px; }
+.wf-cand .role { color: var(--text-faint); font-size: 10px; }
+.wf-cand-bottom { display: flex; align-items: center; gap: 6px; font-size: 9px; color: var(--text-faint); }
+
+/* Workflow B — skill report */
+.wf-report {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(15,15,18,0.7), rgba(15,15,18,0.4));
+  backdrop-filter: blur(16px);
+  padding: 28px;
+  box-shadow: 0 0 100px -30px rgba(99,102,241,0.4);
+}
+.wf-report-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.wf-cand-pill {
+  display: flex; align-items: center; gap: 10px;
+}
+.wf-cand-pill .avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--coral), var(--indigo));
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 13px; color: white; font-weight: 600;
+}
+.wf-overall {
+  text-align: right;
+}
+.wf-overall .num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--coral-bright), #ffae8a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+.wf-overall .lbl {
+  font-size: 10px; font-family: 'JetBrains Mono', monospace;
+  color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.1em;
+}
+.wf-radar-wrap {
+  display: grid; grid-template-columns: 200px 1fr; gap: 24px;
+  align-items: center;
+}
+.wf-skills { display: flex; flex-direction: column; gap: 12px; }
+.wf-skill-row { display: flex; align-items: center; gap: 12px; }
+.wf-skill-row .lbl { width: 92px; font-size: 12px; color: var(--text-dim); }
+.wf-skill-row .bar { flex: 1; height: 6px; border-radius: 4px; background: rgba(255,255,255,0.06); overflow: hidden; }
+.wf-skill-row .fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--coral), #ffae8a); box-shadow: 0 0 10px rgba(201,100,66,0.7); }
+.wf-skill-row .val { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--coral-bright); width: 32px; text-align: right; }
+
+.wf-tag-strip {
+  margin-top: 20px;
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.wf-tag {
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+  color: var(--text-dim);
+}
+.wf-tag.ok { color: #6ee7b7; border-color: rgba(110,231,183,0.3); background: rgba(16,185,129,0.06); }
+.wf-tag.warn { color: #fcd34d; border-color: rgba(252,211,77,0.3); background: rgba(245,158,11,0.06); }
+
+/* Workflow C — campaigns */
+.wf-camp {
+  position: absolute; inset: 0;
+  border: 1px solid var(--border); border-radius: 20px;
+  background: linear-gradient(180deg, rgba(15,15,18,0.7), rgba(15,15,18,0.4));
+  backdrop-filter: blur(16px);
+  padding: 24px;
+  box-shadow: 0 0 100px -30px rgba(201,100,66,0.4);
+  display: flex; flex-direction: column; gap: 16px;
+}
+.wf-camp-head { display: flex; align-items: center; justify-content: space-between; }
+.wf-camp-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.wf-camp-stat {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+}
+.wf-camp-stat .num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.wf-camp-stat .num .delta { font-size: 12px; color: #6ee7b7; margin-left: 6px; }
+.wf-camp-stat .lbl { font-size: 10px; color: var(--text-faint); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
+
+.wf-camp-list { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.wf-camp-row {
+  display: grid;
+  grid-template-columns: 1fr 90px 90px;
+  align-items: center;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 12px;
+  gap: 12px;
+}
+.wf-camp-row .name { color: var(--text); font-weight: 500; }
+.wf-camp-row .meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-faint); }
+.wf-camp-row .pct { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--coral-bright); text-align: right; }
+.wf-camp-row .pct-bar { height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; margin-top: 4px; }
+.wf-camp-row .pct-bar-fill { height: 100%; background: linear-gradient(90deg, var(--coral), var(--coral-bright)); border-radius: 2px; }
+
+/* Features grid */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.feature {
+  padding: 24px;
+  min-height: 220px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.feature h4 { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; color: var(--text); }
+.feature p { font-size: 14px; line-height: 1.55; }
+
+@media (max-width:980px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width:560px) { .features-grid { grid-template-columns: 1fr; } }
+
+/* Metrics section */
+.metrics {
+  position: relative;
+  padding: 100px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.metrics .aurora.coral { width: 900px; height: 700px; top: -200px; left: -200px; opacity: 0.35; }
+.metrics .aurora.indigo { width: 700px; height: 600px; bottom: -200px; right: -100px; opacity: 0.3; }
+
+.metrics-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+}
+.metric {
+  text-align: center;
+  padding: 32px 16px;
+  position: relative;
+}
+.metric::after {
+  content: '';
+  position: absolute;
+  right: -12px;
+  top: 20%;
+  bottom: 20%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, var(--border), transparent);
+}
+.metric:last-child::after { display: none; }
+
+.metric-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, var(--coral-bright) 0%, #ffd0b8 50%, #fff5ee 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  text-shadow: 0 0 60px rgba(201,100,66,0.3);
+}
+
+.metric-num .suffix { font-size: 0.55em; opacity: 0.7; }
+.metric-lbl {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-top: 14px;
+  max-width: 220px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width:880px) {
+  .metrics-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .metric::after { display: none; }
+}
+
+/* Testimonials */
+.test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.testimonial {
+  padding: 32px;
+  position: relative;
+}
+.test-mark {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 60px;
+  line-height: 1;
+  color: var(--coral-bright);
+  opacity: 0.6;
+  position: absolute;
+  top: 16px; left: 24px;
+  text-shadow: 0 0 30px rgba(201,100,66,0.5);
+}
+.test-quote {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  line-height: 1.45;
+  color: var(--text);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin-top: 56px;
+  margin-bottom: 24px;
+}
+.test-attr { display: flex; align-items: center; gap: 12px; padding-top: 20px; border-top: 1px solid var(--border); }
+.test-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--coral), var(--indigo));
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 600; color: white; font-size: 13px;
+}
+.test-name { font-size: 13px; color: var(--text); font-weight: 500; }
+.test-role { font-size: 12px; color: var(--text-faint); }
+
+@media (max-width:880px) { .test-grid { grid-template-columns: 1fr; } }
+
+/* Final CTA */
+.final-cta {
+  position: relative;
+  text-align: center;
+  padding: 140px 0;
+  overflow: hidden;
+}
+.final-cta .aurora.coral { width: 800px; height: 700px; top: -200px; left: 50%; transform: translateX(-50%); opacity: 0.4; }
+.final-cta .aurora.indigo { width: 700px; height: 500px; bottom: -200px; left: 30%; opacity: 0.25; }
+
+.final-cta h2 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  margin-bottom: 24px;
+  max-width: 900px;
+  margin-left: auto; margin-right: auto;
+}
+.final-cta p {
+  font-size: 18px;
+  max-width: 620px;
+  margin: 0 auto 40px;
+}
+.final-cta-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* Section heading variations */
+.section-mono-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--coral-bright);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 980px) {
+  .hero-grid, .workflow { grid-template-columns: 1fr; gap: 60px; }
+  .workflow.reverse { direction: ltr; }
+  .mockup { max-width: 560px; margin: 0 auto; }
+}
+</style>
+</head>
+<body data-page="home">
+
+<!-- Navigation -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-dot"></span>
+      Recru<span style="color:var(--coral-bright)">IQ</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#product">Product</a></li>
+      <li><a href="index.html#how">How It Works</a></li>
+      <li><a href="compare.html">Compare</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="contact.html" class="btn btn-sm" style="border-color:transparent;background:transparent;">Sign In</a>
+      <a href="contact.html" class="btn btn-primary btn-sm">Book a Demo →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="aurora coral"></div>
+  <div class="aurora indigo"></div>
+  <div id="particles"></div>
+
+  <div class="container hero-grid">
+    <div>
+      <div class="hero-eyebrow reveal">
+        <span class="tag">NEW</span>
+        Recruitment intelligence, built for India
+      </div>
+      <h1 class="reveal" data-delay="1">
+        The <span class="grad-text">AI&nbsp;Brain</span><br>
+        Behind Your<br>
+        Best Hires.
+      </h1>
+      <p class="lead reveal" data-delay="2">
+        RecruIQ gives your recruitment team an AI co-pilot — from sourcing to skill verification — so you spend less time searching and more time hiring right.
+      </p>
+      <div class="hero-ctas reveal" data-delay="3">
+        <a href="contact.html" class="btn btn-primary btn-lg">Book a Demo →</a>
+        <a href="#product" class="btn btn-ghost btn-lg">See How It Works ↓</a>
+      </div>
+    </div>
+
+    <div class="mockup reveal" data-delay="2">
+      <!-- Pipeline card -->
+      <div class="float-card fc-pipeline">
+        <div class="fc-head">
+          <div>
+            <span class="ttl">Sr. Frontend Engineer</span>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-faint);margin-top:2px;letter-spacing:0.06em;">PIPELINE · BANGALORE · ₹28–40L</div>
+          </div>
+          <span class="dots"><span style="background:#6ee7b7;box-shadow:0 0 6px #6ee7b7"></span><span></span><span></span></span>
+        </div>
+
+        <div class="fc-banner">
+          <span class="pulse"></span>
+          <span class="ai-mono">AI</span>
+          <span><b>Karthik S.</b> completed assessment · <b>94/100</b></span>
+        </div>
+
+        <div class="pipe-cols">
+          <div class="pipe-col">
+            <div class="pipe-col-h"><span>Sourced</span><span>24</span></div>
+            <div class="pipe-col-spark">
+              <span style="height:30%"></span><span style="height:55%"></span><span style="height:42%"></span><span style="height:70%"></span><span style="height:88%"></span><span style="height:62%"></span><span style="height:100%"></span>
+            </div>
+            <div class="cand">
+              <div class="cand-row">
+                <div class="cand-avatar">AR</div>
+                <div style="flex:1;min-width:0">
+                  <div class="cand-name">Aanya R.</div>
+                  <div class="cand-role">5y · Razorpay</div>
+                </div>
+                <span class="score-badge">92</span>
+              </div>
+              <div class="cand-tags"><span class="cand-tag coral">React 18</span><span class="cand-tag">30d</span></div>
+            </div>
+            <div class="cand">
+              <div class="cand-row">
+                <div class="cand-avatar">DM</div>
+                <div style="flex:1;min-width:0">
+                  <div class="cand-name">Dev M.</div>
+                  <div class="cand-role">3y · CRED</div>
+                </div>
+                <span class="score-badge mid">78</span>
+              </div>
+              <div class="cand-tags"><span class="cand-tag idx">Next.js</span><span class="cand-tag">Open</span></div>
+            </div>
+            <div class="cand">
+              <div class="cand-row">
+                <div class="cand-avatar">PK</div>
+                <div style="flex:1;min-width:0">
+                  <div class="cand-name">Priya K.</div>
+                  <div class="cand-role">7y · Zerodha</div>
+                </div>
+                <span class="score-badge">88</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pipe-col">
+            <div class="pipe-col-h"><span>Assessed</span><span>9</span></div>
+            <div class="pipe-col-spark">
+              <span style="height:50%"></span><span style="height:65%"></span><span style="height:78%"></span><span style="height:60%"></span><span style="height:82%"></span><span style="height:74%"></span><span style="height:92%"></span>
+            </div>
+            <div class="cand">
+              <div class="cand-row">
+                <div class="cand-avatar">RV</div>
+                <div style="flex:1;min-width:0">
+                  <div class="cand-name">Rohan V.</div>
+                  <div class="cand-role">23 min</div>
+                </div>
+                <span class="score-badge">95</span>
+              </div>
+              <div class="cand-tags"><span class="cand-tag ok">✓ Verified</span></div>
+            </div>
+            <div class="cand">
+              <div class="cand-row">
+                <div class="cand-avatar">SN</div>
+                <div style="flex:1;min-width:0">
+                  <div class="cand-name">Sneha N.</div>
+                  <div class="cand-role">28 min</div>
+                </div>
+                <span class="score-badge low">65</span>
+              </div>
+              <div class="cand-tags"><span class="cand-tag">Train: Testing</span></div>
+            </div>
+          </div>
+
+          <div class="pipe-col">
+            <div class="pipe-col-h"><span>Interview</span><span>3</span></div>
+            <div class="pipe-col-spark">
+              <span style="height:40%"></span><span style="height:62%"></span><span style="height:55%"></span><span style="height:80%"></span><span style="height:70%"></span><span style="height:95%"></span><span style="height:85%"></span>
+            </div>
+            <div class="cand">
+              <div class="cand-row">
+                <div class="cand-avatar">KS</div>
+                <div style="flex:1;min-width:0">
+                  <div class="cand-name">Karthik S.</div>
+                  <div class="cand-role">Tue · 4 PM</div>
+                </div>
+                <span class="score-badge">94</span>
+              </div>
+              <div class="cand-tags"><span class="cand-tag idx">Round 2</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity card (live feed) -->
+      <div class="float-card fc-activity">
+        <div class="head">
+          <span>Live activity</span>
+          <span class="live-dot"></span>
+        </div>
+        <div class="fc-activity-row">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 11l3 3 7-7"/></svg></span>
+          <span><b>3 candidates</b> matched</span>
+          <time>2m</time>
+        </div>
+        <div class="fc-activity-row">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9l9 6 9-6"/></svg></span>
+          <span><b>Sara R.</b> replied</span>
+          <time>9m</time>
+        </div>
+        <div class="fc-activity-row">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg></span>
+          <span><b>Interview</b> booked</span>
+          <time>14m</time>
+        </div>
+      </div>
+
+      <!-- Report card -->
+      <div class="float-card fc-report">
+        <div class="fc-report-top">
+          <div class="av">KS</div>
+          <div class="info">
+            <div class="name">Karthik Suresh</div>
+            <div class="meta">REPORT · 23 MIN · VERIFIED</div>
+          </div>
+          <div class="fc-overall">
+            <div class="num">94</div>
+            <div class="lbl">Hire</div>
+          </div>
+        </div>
+
+        <svg class="radar" viewBox="0 0 120 120" style="margin:0 auto 4px;display:block;">
+          <defs>
+            <radialGradient id="rg" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#C96442" stop-opacity="0.55"/>
+              <stop offset="100%" stop-color="#C96442" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <polygon points="60,15 99,38 99,82 60,105 21,82 21,38" fill="none" stroke="rgba(255,255,255,0.08)"/>
+          <polygon points="60,28 88,44 88,76 60,92 32,76 32,44" fill="none" stroke="rgba(255,255,255,0.06)"/>
+          <polygon points="60,40 78,50 78,70 60,80 42,70 42,50" fill="none" stroke="rgba(255,255,255,0.05)"/>
+          <line x1="60" y1="60" x2="60" y2="15" stroke="rgba(255,255,255,0.06)"/>
+          <line x1="60" y1="60" x2="99" y2="38" stroke="rgba(255,255,255,0.06)"/>
+          <line x1="60" y1="60" x2="99" y2="82" stroke="rgba(255,255,255,0.06)"/>
+          <line x1="60" y1="60" x2="60" y2="105" stroke="rgba(255,255,255,0.06)"/>
+          <line x1="60" y1="60" x2="21" y2="82" stroke="rgba(255,255,255,0.06)"/>
+          <line x1="60" y1="60" x2="21" y2="38" stroke="rgba(255,255,255,0.06)"/>
+          <polygon points="60,20 95,40 92,80 60,98 28,78 25,42" fill="url(#rg)" stroke="#E97A52" stroke-width="1.5" stroke-linejoin="round" style="filter: drop-shadow(0 0 6px rgba(201,100,66,0.7))"/>
+          <circle cx="60" cy="20" r="2.2" fill="#E97A52"/>
+          <circle cx="95" cy="40" r="2.2" fill="#E97A52"/>
+          <circle cx="92" cy="80" r="2.2" fill="#E97A52"/>
+          <circle cx="60" cy="98" r="2.2" fill="#E97A52"/>
+          <circle cx="28" cy="78" r="2.2" fill="#E97A52"/>
+          <circle cx="25" cy="42" r="2.2" fill="#E97A52"/>
+        </svg>
+
+        <div class="skill-row"><span class="lbl">React</span><span class="skill-bar"><span class="skill-bar-fill" style="width:96%"></span></span><span class="val">96</span></div>
+        <div class="skill-row"><span class="lbl">TypeScript</span><span class="skill-bar"><span class="skill-bar-fill" style="width:92%"></span></span><span class="val">92</span></div>
+        <div class="skill-row"><span class="lbl">Architecture</span><span class="skill-bar"><span class="skill-bar-fill" style="width:88%"></span></span><span class="val">88</span></div>
+        <div class="skill-row"><span class="lbl">Testing</span><span class="skill-bar"><span class="skill-bar-fill" style="width:76%"></span></span><span class="val">76</span></div>
+
+        <div class="fc-ai-summary">
+          Strong on systems &amp; React fundamentals. Slight gap in testing depth — recommend a 2-week ramp on Jest fixtures.
+        </div>
+
+        <div class="fc-badges">
+          <span class="fc-badge ok">✓ Camera</span>
+          <span class="fc-badge ok">✓ Activity</span>
+          <span class="fc-badge coral">Schedule R2</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee" style="padding: 24px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.012);">
+  <div class="marquee-track">
+    <span>AI Candidate Matching</span>
+    <span>Skill Assessment Portal</span>
+    <span>Automated Outreach</span>
+    <span>Training Loop</span>
+    <span>Integrity Monitoring</span>
+    <span>Pipeline Analytics</span>
+    <span>Interview Scheduling</span>
+    <span>Talent Campaigns</span>
+    <span>AI Candidate Matching</span>
+    <span>Skill Assessment Portal</span>
+    <span>Automated Outreach</span>
+    <span>Training Loop</span>
+    <span>Integrity Monitoring</span>
+    <span>Pipeline Analytics</span>
+    <span>Interview Scheduling</span>
+    <span>Talent Campaigns</span>
+  </div>
+</div>
+
+<!-- Trust bar -->
+<div class="trust-bar">
+  <div class="container trust-bar-inner">
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Encrypted at rest and in transit</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 21h18M5 21V10l7-5 7 5v11"/></svg>Enterprise-grade infrastructure</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 7-7M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20z"/></svg>Privacy-first design</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Built for reliability</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 17l9 5 9-5"/></svg>Bank-grade encryption</span>
+  </div>
+</div>
+
+<!-- Pain points -->
+<section class="pain" id="problem">
+  <div class="container pain-grid">
+    <div class="pain-item reveal">
+      <div class="pain-stat">8+<span style="font-size:0.5em;color:var(--text-faint);"> hrs</span></div>
+      <div class="pain-lbl">Hours lost per recruiter, per week, to manual CV screening.</div>
+    </div>
+    <div class="pain-item reveal" data-delay="1">
+      <div class="pain-stat">1 in 3</div>
+      <div class="pain-lbl">Candidates who fail on skill despite passing your CV screen.</div>
+    </div>
+    <div class="pain-item reveal" data-delay="2">
+      <div class="pain-stat">42<span style="font-size:0.5em;color:var(--text-faint);"> days</span></div>
+      <div class="pain-lbl">Average time to fill a role the traditional way.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Product workflows -->
+<section id="product" class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="pill"><span class="dot"></span>The platform</span>
+      <h2>Three workflows. <span class="grad-text">One brain.</span></h2>
+      <p>Standard hiring, skill-based assessment, and always-on talent marketing — connected end to end.</p>
+    </div>
+  </div>
+
+  <div class="container" id="how">
+    <!-- Section A -->
+    <div class="workflow">
+      <div class="workflow-text reveal">
+        <span class="pill"><span class="dot"></span>Hire Faster</span>
+        <h2>Your team sources. The AI scores. You interview the best.</h2>
+        <p>Post a role and let the AI find, rank, and engage candidates from professional networks — personalised outreach at scale, structured pipeline management, and one-click interview scheduling. Your recruiters focus on conversations, not spreadsheets.</p>
+        <ul class="outcomes">
+          <li>Candidates ranked by fit before you read a single CV</li>
+          <li>Personalised outreach sent automatically — higher response rates</li>
+          <li>Full pipeline visibility across your whole team</li>
+        </ul>
+      </div>
+      <div class="workflow-visual reveal" data-delay="1">
+        <div class="wf-pipeline">
+          <div class="wf-pipeline-head">
+            <div>
+              <div class="wf-pipeline-h">Senior Product Designer · Bangalore</div>
+              <div class="wf-pipeline-meta">42 candidates · 3 days active</div>
+            </div>
+            <div class="pill"><span class="dot"></span>LIVE</div>
+          </div>
+          <div class="wf-cols">
+            <div class="wf-col">
+              <div class="wf-col-h"><span>Sourced</span><span class="count">28</span></div>
+              <div class="wf-cand">
+                <div class="wf-cand-top"><div class="cand-avatar">VR</div><div><div class="name">Vikram R.</div><div class="role">7y · Fintech</div></div><span class="score-badge" style="margin-left:auto">94</span></div>
+                <div class="wf-cand-bottom"><span>Bangalore</span><span>·</span><span>30d notice</span></div>
+              </div>
+              <div class="wf-cand">
+                <div class="wf-cand-top"><div class="cand-avatar">MA</div><div><div class="name">Maya A.</div><div class="role">5y · SaaS</div></div><span class="score-badge" style="margin-left:auto">89</span></div>
+                <div class="wf-cand-bottom"><span>Remote</span><span>·</span><span>Open</span></div>
+              </div>
+              <div class="wf-cand">
+                <div class="wf-cand-top"><div class="cand-avatar">JN</div><div><div class="name">Jay N.</div><div class="role">4y · B2B</div></div><span class="score-badge mid" style="margin-left:auto">81</span></div>
+              </div>
+            </div>
+            <div class="wf-col">
+              <div class="wf-col-h"><span>Engaged</span><span class="count">12</span></div>
+              <div class="wf-cand">
+                <div class="wf-cand-top"><div class="cand-avatar">SR</div><div><div class="name">Sara R.</div><div class="role">Replied</div></div><span class="score-badge" style="margin-left:auto">91</span></div>
+                <div class="wf-cand-bottom"><span>Interested</span></div>
+              </div>
+              <div class="wf-cand">
+                <div class="wf-cand-top"><div class="cand-avatar">AK</div><div><div class="name">Arjun K.</div><div class="role">Replied</div></div><span class="score-badge" style="margin-left:auto">87</span></div>
+                <div class="wf-cand-bottom"><span>Wants 25% ↑</span></div>
+              </div>
+            </div>
+            <div class="wf-col">
+              <div class="wf-col-h"><span>Interview</span><span class="count">4</span></div>
+              <div class="wf-cand">
+                <div class="wf-cand-top"><div class="cand-avatar">NT</div><div><div class="name">Nikhil T.</div><div class="role">Scheduled</div></div><span class="score-badge" style="margin-left:auto">96</span></div>
+                <div class="wf-cand-bottom"><span>Thu · 3 PM</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section B -->
+    <div class="workflow reverse">
+      <div class="workflow-text reveal">
+        <span class="pill"><span class="dot"></span>Unique to RecruIQ</span>
+        <h2>Only interview candidates who can actually do the job.</h2>
+        <p>Send candidates AI-generated skill assessments tailored to your exact job description. Get a scored breakdown by skill — not a gut feeling. Identify training gaps, recommend a development plan, and re-assess after training. You only interview candidates who are verified job-ready.</p>
+        <ul class="outcomes">
+          <li>Scored skill reports replace 10-hour phone screen cycles</li>
+          <li>Training gaps identified and plans generated automatically</li>
+          <li>Candidate integrity verified — monitored assessment portal</li>
+        </ul>
+      </div>
+      <div class="workflow-visual reveal" data-delay="1">
+        <div class="wf-report">
+          <div class="wf-report-head">
+            <div class="wf-cand-pill">
+              <div class="avatar">KS</div>
+              <div>
+                <div style="font-size:14px;font-weight:500;">Karthik Suresh</div>
+                <div style="font-size:11px;color:var(--text-faint);font-family:'JetBrains Mono',monospace;">REPORT · 23 MIN</div>
+              </div>
+            </div>
+            <div class="wf-overall">
+              <div class="num">94</div>
+              <div class="lbl">Overall · Hire</div>
+            </div>
+          </div>
+          <div class="wf-radar-wrap">
+            <svg viewBox="0 0 200 200" style="width:100%;">
+              <defs>
+                <radialGradient id="rg2" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#C96442" stop-opacity="0.55"/>
+                  <stop offset="100%" stop-color="#C96442" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <polygon points="100,15 165,52 165,148 100,185 35,148 35,52" fill="none" stroke="rgba(255,255,255,0.08)"/>
+              <polygon points="100,40 145,65 145,135 100,160 55,135 55,65" fill="none" stroke="rgba(255,255,255,0.06)"/>
+              <polygon points="100,65 125,80 125,120 100,135 75,120 75,80" fill="none" stroke="rgba(255,255,255,0.05)"/>
+              <line x1="100" y1="100" x2="100" y2="15" stroke="rgba(255,255,255,0.06)"/>
+              <line x1="100" y1="100" x2="165" y2="52" stroke="rgba(255,255,255,0.06)"/>
+              <line x1="100" y1="100" x2="165" y2="148" stroke="rgba(255,255,255,0.06)"/>
+              <line x1="100" y1="100" x2="100" y2="185" stroke="rgba(255,255,255,0.06)"/>
+              <line x1="100" y1="100" x2="35" y2="148" stroke="rgba(255,255,255,0.06)"/>
+              <line x1="100" y1="100" x2="35" y2="52" stroke="rgba(255,255,255,0.06)"/>
+              <polygon points="100,22 158,57 152,142 100,176 48,142 42,58" fill="url(#rg2)" stroke="#E97A52" stroke-width="1.5" stroke-linejoin="round" style="filter: drop-shadow(0 0 8px rgba(201,100,66,0.7))"/>
+              <circle cx="100" cy="22" r="3" fill="#E97A52"/>
+              <circle cx="158" cy="57" r="3" fill="#E97A52"/>
+              <circle cx="152" cy="142" r="3" fill="#E97A52"/>
+              <circle cx="100" cy="176" r="3" fill="#E97A52"/>
+              <circle cx="48" cy="142" r="3" fill="#E97A52"/>
+              <circle cx="42" cy="58" r="3" fill="#E97A52"/>
+              <text x="100" y="10" text-anchor="middle" font-size="10" fill="#a1a1aa" font-family="JetBrains Mono">Design</text>
+              <text x="180" y="50" text-anchor="middle" font-size="10" fill="#a1a1aa" font-family="JetBrains Mono">Research</text>
+              <text x="180" y="160" text-anchor="middle" font-size="10" fill="#a1a1aa" font-family="JetBrains Mono">Systems</text>
+              <text x="100" y="198" text-anchor="middle" font-size="10" fill="#a1a1aa" font-family="JetBrains Mono">Process</text>
+              <text x="20" y="160" text-anchor="middle" font-size="10" fill="#a1a1aa" font-family="JetBrains Mono">Comms</text>
+              <text x="20" y="50" text-anchor="middle" font-size="10" fill="#a1a1aa" font-family="JetBrains Mono">Strategy</text>
+            </svg>
+            <div class="wf-skills">
+              <div class="wf-skill-row"><span class="lbl">UI Systems</span><span class="bar"><span class="fill" style="width:96%"></span></span><span class="val">96</span></div>
+              <div class="wf-skill-row"><span class="lbl">UX Research</span><span class="bar"><span class="fill" style="width:88%"></span></span><span class="val">88</span></div>
+              <div class="wf-skill-row"><span class="lbl">Prototyping</span><span class="bar"><span class="fill" style="width:92%"></span></span><span class="val">92</span></div>
+              <div class="wf-skill-row"><span class="lbl">Strategy</span><span class="bar"><span class="fill" style="width:84%"></span></span><span class="val">84</span></div>
+              <div class="wf-skill-row"><span class="lbl">Writing</span><span class="bar"><span class="fill" style="width:78%"></span></span><span class="val">78</span></div>
+            </div>
+          </div>
+          <div class="wf-tag-strip">
+            <span class="wf-tag ok">✓ Integrity verified</span>
+            <span class="wf-tag ok">✓ Camera signals clean</span>
+            <span class="wf-tag warn">! Coach: Writing</span>
+            <span class="wf-tag">23 min completion</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section C -->
+    <div class="workflow">
+      <div class="workflow-text reveal">
+        <span class="pill"><span class="dot"></span>Always On</span>
+        <h2>Build your talent pipeline before the role even opens.</h2>
+        <p>Run intelligent outreach campaigns to engage passive candidates continuously. When you open a new role, warm candidates are already in your pipeline — dramatically cutting time-to-hire and eliminating agency dependency.</p>
+        <ul class="outcomes">
+          <li>Personalised campaign sequences with real engagement analytics</li>
+          <li>Talent bench ready before headcount is approved</li>
+          <li>Reduce time-to-hire and eliminate agency fees</li>
+        </ul>
+      </div>
+      <div class="workflow-visual reveal" data-delay="1">
+        <div class="wf-camp">
+          <div class="wf-camp-head">
+            <div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;">Active Campaigns</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-faint);">3 running · Updated 2m ago</div>
+            </div>
+            <div class="pill"><span class="dot"></span>+18% this week</div>
+          </div>
+          <div class="wf-camp-stats">
+            <div class="wf-camp-stat"><div class="num">1,247</div><div class="lbl">In flight</div></div>
+            <div class="wf-camp-stat"><div class="num">62<span style="font-size:14px;color:var(--text-faint);">%</span> <span class="delta">↑ 14</span></div><div class="lbl">Open rate</div></div>
+            <div class="wf-camp-stat"><div class="num">23<span style="font-size:14px;color:var(--text-faint);">%</span> <span class="delta">↑ 8</span></div><div class="lbl">Reply rate</div></div>
+          </div>
+          <div class="wf-camp-list">
+            <div class="wf-camp-row">
+              <div><div class="name">Sr. Backend Engineers · Bangalore</div><div class="meta">420 contacts · 9 days</div></div>
+              <div><div class="pct">68%</div><div class="pct-bar"><div class="pct-bar-fill" style="width:68%"></div></div></div>
+              <div><div class="pct" style="color:var(--indigo-bright)">27%</div><div class="pct-bar"><div class="pct-bar-fill" style="width:27%;background:linear-gradient(90deg,var(--indigo),var(--indigo-bright));"></div></div></div>
+            </div>
+            <div class="wf-camp-row">
+              <div><div class="name">Product Designers · Pan-India</div><div class="meta">312 contacts · 14 days</div></div>
+              <div><div class="pct">59%</div><div class="pct-bar"><div class="pct-bar-fill" style="width:59%"></div></div></div>
+              <div><div class="pct" style="color:var(--indigo-bright)">22%</div><div class="pct-bar"><div class="pct-bar-fill" style="width:22%;background:linear-gradient(90deg,var(--indigo),var(--indigo-bright));"></div></div></div>
+            </div>
+            <div class="wf-camp-row">
+              <div><div class="name">Growth PMs · Series A+</div><div class="meta">218 contacts · 6 days</div></div>
+              <div><div class="pct">71%</div><div class="pct-bar"><div class="pct-bar-fill" style="width:71%"></div></div></div>
+              <div><div class="pct" style="color:var(--indigo-bright)">31%</div><div class="pct-bar"><div class="pct-bar-fill" style="width:31%;background:linear-gradient(90deg,var(--indigo),var(--indigo-bright));"></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features grid -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="pill indigo"><span class="dot"></span>What's inside</span>
+      <h2>Eight tools. <span class="grad-text">One platform.</span></h2>
+      <p>Every step of recruitment — from sourcing to onboarding-ready — covered in one place.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="card feature reveal">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M7 12h10"/></svg></div>
+        <div>
+          <h4>AI Candidate Matching</h4>
+          <p>Scores every candidate against your JD automatically.</p>
+        </div>
+      </div>
+      <div class="card feature reveal" data-delay="1">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h16v16H4z"/><path d="M4 8h16M8 4v16"/></svg></div>
+        <div>
+          <h4>Personalised Outreach</h4>
+          <p>Scale communication without losing the human touch.</p>
+        </div>
+      </div>
+      <div class="card feature reveal" data-delay="2">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 7-7M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <div>
+          <h4>Skill Assessment Portal</h4>
+          <p>Timed, AI-generated tests tailored to your role.</p>
+        </div>
+      </div>
+      <div class="card feature reveal" data-delay="3">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div>
+          <h4>Integrity Monitoring</h4>
+          <p>Camera and activity signals verify genuine performance.</p>
+        </div>
+      </div>
+      <div class="card feature reveal">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+        <div>
+          <h4>Interview Scheduler</h4>
+          <p>One-click Meet link, invite, and calendar event.</p>
+        </div>
+      </div>
+      <div class="card feature reveal" data-delay="1">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19V5a2 2 0 0 1 2-2h12M8 7h8M8 11h8M8 15h5"/><path d="M20 17v4l-3-2-3 2v-4"/></svg></div>
+        <div>
+          <h4>Training Roadmap</h4>
+          <p>Auto-generated learning plans for candidates who need growth.</p>
+        </div>
+      </div>
+      <div class="card feature reveal" data-delay="2">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 3v18h18M7 14l4-4 4 4 5-5"/></svg></div>
+        <div>
+          <h4>Pipeline Analytics</h4>
+          <p>Time-to-hire, source quality, and team productivity, live.</p>
+        </div>
+      </div>
+      <div class="card feature reveal" data-delay="3">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="17" cy="7" r="3"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
+        <div>
+          <h4>Team Collaboration</h4>
+          <p>Multiple recruiters, one shared pipeline.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Metrics -->
+<section class="metrics">
+  <div class="aurora coral"></div>
+  <div class="aurora indigo"></div>
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="pill"><span class="dot"></span>The numbers</span>
+      <h2>Built to move <span class="grad-text">faster than feels possible.</span></h2>
+    </div>
+    <div class="metrics-grid">
+      <div class="metric reveal">
+        <div class="metric-num"><span data-count="3" data-decimals="0">0</span><span class="suffix">×</span></div>
+        <div class="metric-lbl">Faster candidate shortlisting</div>
+      </div>
+      <div class="metric reveal" data-delay="1">
+        <div class="metric-num"><span data-count="60" data-decimals="0">0</span><span class="suffix">%</span></div>
+        <div class="metric-lbl">Less time spent on outreach</div>
+      </div>
+      <div class="metric reveal" data-delay="2">
+        <div class="metric-num"><span data-count="40" data-decimals="0">0</span><span class="suffix">%</span></div>
+        <div class="metric-lbl">Fewer bad hires with skill verification</div>
+      </div>
+      <div class="metric reveal" data-delay="3">
+        <div class="metric-num"><span data-count="42" data-decimals="0">0</span><span style="font-size:0.5em;color:var(--text-faint);"> → </span><span data-count="18" data-decimals="0">0</span></div>
+        <div class="metric-lbl">Days to hire, before vs. after</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="pill indigo"><span class="dot"></span>What teams say</span>
+      <h2>From recruiters running real pipelines.</h2>
+    </div>
+    <div class="test-grid">
+      <div class="card testimonial reveal">
+        <span class="test-mark">"</span>
+        <p class="test-quote">Screening used to eat my Tuesdays. Now I read four scored reports over coffee and know exactly who's worth a call.</p>
+        <div class="test-attr">
+          <div class="test-avatar">AS</div>
+          <div>
+            <div class="test-name">Anjali S.</div>
+            <div class="test-role">Head of Talent · Series B SaaS</div>
+          </div>
+        </div>
+      </div>
+      <div class="card testimonial reveal" data-delay="1">
+        <span class="test-mark">"</span>
+        <p class="test-quote">The assessment reports replaced two rounds of phone screens. We're hiring people who can do the work — not just talk about it.</p>
+        <div class="test-attr">
+          <div class="test-avatar">RM</div>
+          <div>
+            <div class="test-name">Rahul M.</div>
+            <div class="test-role">HR Manager · 200-person fintech</div>
+          </div>
+        </div>
+      </div>
+      <div class="card testimonial reveal" data-delay="2">
+        <span class="test-mark">"</span>
+        <p class="test-quote">Our campaign reply rate tripled. We're filling roles for clients in a week that used to take five.</p>
+        <div class="test-attr">
+          <div class="test-avatar">PJ</div>
+          <div>
+            <div class="test-name">Pooja J.</div>
+            <div class="test-role">Founder · Recruitment Agency</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="final-cta">
+  <div class="aurora coral"></div>
+  <div class="aurora indigo"></div>
+  <div class="container">
+    <h2 class="reveal"><span class="grad-text">Your competitors are hiring faster.</span></h2>
+    <p class="reveal" data-delay="1">Every day your team spends on manual recruiting is a day a better-funded, better-tooled competitor moves ahead. Start your free trial today.</p>
+    <div class="final-cta-ctas reveal" data-delay="2">
+      <a href="contact.html" class="btn btn-primary btn-lg">Start Free Trial →</a>
+      <a href="contact.html" class="btn btn-ghost btn-lg">Book a Demo →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <span class="logo-dot"></span>
+          Recru<span style="color:var(--coral-bright)">IQ</span>
+        </a>
+        <p>Hire with intelligence. Built for recruiters in India 🇮🇳</p>
+      </div>
+      <div>
+        <h5>Product</h5>
+        <ul>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="compare.html">Compare</a></li>
+          <li><a href="#">Changelog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Security</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 RecruIQ · All rights reserved.</span>
+      <div class="footer-social">
+        <a href="https://linkedin.com/company/recruiq" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.65-1.85 3.39-1.85 3.62 0 4.29 2.38 4.29 5.48v6.26zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+        <a href="https://x.com/recruiq" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+</body>
+</html>

@@ -1,0 +1,965 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Old Way vs. RecruIQ · Compare</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none';">
+<link rel="icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="theme-color" content="#C96442">
+<meta name="description" content="RecruIQ vs. traditional recruiting — see how AI replaces every broken link in the hiring chain.">
+<meta property="og:title" content="The Old Way vs. RecruIQ · Compare">
+<meta property="og:description" content="See how AI-powered recruitment replaces slow, manual, disconnected hiring steps.">
+<meta property="og:image" content="https://recru-iq.com/og-image.png">
+<meta property="og:url" content="https://recru-iq.com/compare.html">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* Compare hero */
+.cmp-top {
+  position: relative;
+  padding-top: 160px;
+  padding-bottom: 60px;
+  text-align: center;
+  overflow: hidden;
+}
+.cmp-top .aurora.coral { width: 700px; height: 500px; top: -180px; left: 20%; opacity: 0.4; }
+.cmp-top .aurora.indigo { width: 600px; height: 500px; top: -120px; right: 10%; opacity: 0.3; }
+
+.cmp-top h1 {
+  font-size: clamp(2.5rem, 6.5vw, 4.8rem);
+  letter-spacing: -0.035em;
+  margin-bottom: 22px;
+  max-width: 1000px;
+  margin-left: auto; margin-right: auto;
+}
+.cmp-top .lead {
+  font-size: 18px;
+  max-width: 640px;
+  margin: 0 auto;
+  color: var(--text-dim);
+}
+
+/* Timeline */
+.timeline-section { padding: 80px 0; }
+
+.tl-legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 980px;
+  margin: 0 auto 32px;
+}
+.tl-legend-card {
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px 22px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+}
+.tl-legend-card.old {
+  border-color: rgba(245, 158, 11, 0.3);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.06), rgba(239, 68, 68, 0.04));
+  color: #fbbf24;
+}
+.tl-legend-card.new {
+  border-color: rgba(201, 100, 66, 0.35);
+  background: linear-gradient(135deg, rgba(201, 100, 66, 0.06), rgba(16, 185, 129, 0.04));
+  color: var(--coral-bright);
+  box-shadow: 0 0 40px -10px rgba(201, 100, 66, 0.3);
+}
+.tl-legend-card .ic {
+  width: 28px; height: 28px;
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+
+.timeline {
+  position: relative;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+/* Center spine */
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 20px;
+  bottom: 20px;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, var(--border) 8%, var(--border) 92%, transparent);
+}
+
+.tl-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 100px 1fr;
+  gap: 16px;
+  align-items: stretch;
+  padding: 18px 0;
+}
+
+.tl-stage {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.tl-stage .num {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(15, 15, 18, 0.9);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+  position: relative;
+  box-shadow: 0 0 0 4px var(--bg);
+}
+.tl-row.in .tl-stage .num {
+  border-color: rgba(201, 100, 66, 0.6);
+  color: var(--coral-bright);
+  background: linear-gradient(135deg, rgba(201, 100, 66, 0.18), rgba(99, 102, 241, 0.10));
+  box-shadow: 0 0 0 4px var(--bg), 0 0 24px -2px rgba(201, 100, 66, 0.5);
+}
+
+.tl-cell {
+  padding: 18px 20px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  transition: border-color .35s, transform .35s, background .35s, box-shadow .35s;
+  position: relative;
+}
+
+.tl-cell.old {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.04), rgba(239, 68, 68, 0.03));
+  border-color: rgba(245, 158, 11, 0.18);
+  text-align: right;
+}
+.tl-cell.new {
+  background: linear-gradient(135deg, rgba(201, 100, 66, 0.06), rgba(255, 255, 255, 0.02));
+  border-color: rgba(201, 100, 66, 0.25);
+  text-align: left;
+  box-shadow: 0 0 30px -10px rgba(201, 100, 66, 0.3);
+}
+.tl-row.in .tl-cell.new {
+  box-shadow: 0 0 50px -10px rgba(201, 100, 66, 0.5);
+}
+
+.tl-cell h4 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.tl-cell.old h4 { color: #fbbf24; }
+.tl-cell.new h4 { color: var(--coral-bright); }
+
+.tl-cell p {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15.5px;
+  color: var(--text);
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+}
+
+.tl-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+.tl-cell.old .tl-badge {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  color: #fbbf24;
+}
+.tl-cell.new .tl-badge {
+  background: rgba(201, 100, 66, 0.10);
+  border: 1px solid rgba(201, 100, 66, 0.35);
+  color: var(--coral-bright);
+}
+
+@media (max-width: 880px) {
+  .timeline::before { left: 28px; }
+  .tl-row { grid-template-columns: 56px 1fr; gap: 12px; }
+  .tl-stage { align-items: flex-start; text-align: left; }
+  .tl-stage .num { margin-bottom: 0; }
+  .tl-stage .lbl { display: none; }
+  .tl-row > .tl-cell.old, .tl-row > .tl-cell.new {
+    grid-column: 2 / -1;
+    text-align: left;
+  }
+  .tl-row > .tl-cell.old { margin-bottom: 8px; }
+}
+
+/* Calculator */
+.calc-section {
+  padding: 100px 0;
+  border-top: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.calc-section .aurora.coral { width: 700px; height: 500px; top: 50%; left: -150px; transform: translateY(-50%); opacity: 0.25; }
+
+.calc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.calc-controls .pill { margin-bottom: 16px; }
+.calc-controls h2 { margin-bottom: 14px; }
+.calc-controls p { margin-bottom: 32px; }
+
+.calc-slider-row {
+  margin-bottom: 28px;
+}
+.calc-slider-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 10px;
+}
+.calc-slider-head label {
+  font-size: 14px; color: var(--text);
+  font-weight: 500;
+}
+.calc-slider-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--coral-bright), #ffae8a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.02em;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.06);
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--coral-bright), var(--coral));
+  box-shadow: 0 0 0 4px rgba(201,100,66,0.18), 0 0 16px rgba(201,100,66,0.5);
+  cursor: pointer;
+  border: 2px solid #fff5ee;
+  transition: transform .15s;
+}
+input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.1); }
+input[type="range"]::-moz-range-thumb {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--coral-bright), var(--coral));
+  box-shadow: 0 0 16px rgba(201,100,66,0.5);
+  cursor: pointer;
+  border: 2px solid #fff5ee;
+}
+
+.calc-output {
+  padding: 36px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+  backdrop-filter: blur(12px);
+  position: relative;
+}
+
+.calc-ring-wrap {
+  position: relative;
+  width: 220px; height: 220px;
+  margin: 0 auto 28px;
+}
+.calc-ring-wrap svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.calc-ring-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+}
+.calc-ring-pct {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 56px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--coral-bright), #ffd0b8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  text-shadow: 0 0 60px rgba(201,100,66,0.4);
+}
+.calc-ring-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-top: 6px;
+}
+
+.calc-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+.calc-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+.calc-stat .k { color: var(--text-dim); }
+.calc-stat .v {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.calc-stat.highlight .v {
+  background: linear-gradient(135deg, var(--coral-bright), #ffae8a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 26px;
+}
+
+@media (max-width: 980px) { .calc-grid { grid-template-columns: 1fr; gap: 36px; } }
+
+/* Hidden costs */
+.costs-section { padding: 80px 0; }
+.costs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.cost-card {
+  padding: 36px 28px;
+  text-align: left;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.cost-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2.4rem, 4.5vw, 3.4rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--coral-bright) 0%, #ffd0b8 60%, #fff5ee 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 12px;
+  line-height: 1;
+}
+.cost-lbl {
+  font-size: 15px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+.cost-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: auto;
+  padding-bottom: 20px;
+}
+
+@media (max-width: 880px) { .costs-grid { grid-template-columns: 1fr; } }
+
+/* Before/After */
+.ba-section { padding: 100px 0; border-top: 1px solid var(--border); }
+.ba-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.ba-card {
+  padding: 32px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  min-height: 480px;
+  position: relative;
+  overflow: hidden;
+}
+.ba-card.before {
+  background: linear-gradient(160deg, rgba(245, 158, 11, 0.04), rgba(239, 68, 68, 0.04));
+  border-color: rgba(245, 158, 11, 0.2);
+}
+.ba-card.after {
+  background: linear-gradient(160deg, rgba(201, 100, 66, 0.07), rgba(99, 102, 241, 0.04));
+  border-color: rgba(201, 100, 66, 0.3);
+  box-shadow: 0 0 60px -20px rgba(201, 100, 66, 0.4);
+}
+.ba-card h3 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.ba-card.before h3 { color: #fbbf24; }
+.ba-card.after h3 { color: var(--coral-bright); }
+.ba-card .ttl {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 28px;
+  letter-spacing: -0.01em;
+}
+
+.ba-stream {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.ba-line {
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  display: flex; align-items: flex-start; gap: 10px;
+  border: 1px solid;
+  font-family: 'Space Grotesk', sans-serif;
+}
+.ba-line .time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-faint);
+  min-width: 40px;
+}
+.ba-card.before .ba-line {
+  background: rgba(245, 158, 11, 0.04);
+  border-color: rgba(245, 158, 11, 0.12);
+  color: var(--text-dim);
+}
+.ba-card.after .ba-line {
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(201, 100, 66, 0.15);
+  color: var(--text);
+}
+.ba-card.after .ba-line .ok {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--coral-bright);
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(201,100,66,0.10);
+  border: 1px solid rgba(201,100,66,0.3);
+}
+
+@media (max-width: 880px) { .ba-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body data-page="compare">
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-dot"></span>
+      Recru<span style="color:var(--coral-bright)">IQ</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#product">Product</a></li>
+      <li><a href="index.html#how">How It Works</a></li>
+      <li><a href="compare.html" class="active">Compare</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="contact.html" class="btn btn-sm" style="border-color:transparent;background:transparent;">Sign In</a>
+      <a href="contact.html" class="btn btn-primary btn-sm">Book a Demo →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Header -->
+<section class="cmp-top">
+  <div class="aurora coral"></div>
+  <div class="aurora indigo"></div>
+  <div class="container">
+    <div class="reveal"><span class="pill" style="margin-bottom:24px;"><span class="dot"></span>The Old Way vs. RecruIQ</span></div>
+    <h1 class="reveal" data-delay="1"><span class="grad-text">The old way</span> is costing you great hires.</h1>
+    <p class="lead reveal" data-delay="2">Traditional recruiting is a chain of manual, disconnected steps. RecruIQ replaces every broken link in that chain.</p>
+  </div>
+</section>
+
+<!-- Timeline -->
+<section class="timeline-section">
+  <div class="container">
+    <div class="tl-legend reveal">
+      <div class="tl-legend-card old">
+        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>
+        Traditional Process
+      </div>
+      <div class="tl-legend-card new">
+        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg></span>
+        With RecruIQ
+      </div>
+    </div>
+
+    <div class="timeline">
+      <!-- Stage 1 -->
+      <div class="tl-row reveal">
+        <div class="tl-cell old">
+          <h4>Manual</h4>
+          <p>6–10 hours of manual search per role across networks.</p>
+          <span class="tl-badge">! Slow, biased, repetitive</span>
+        </div>
+        <div class="tl-stage"><span class="num">01</span><span class="lbl">Finding Candidates</span></div>
+        <div class="tl-cell new">
+          <h4>Automated</h4>
+          <p>AI finds and ranks candidates in minutes — across the full talent network.</p>
+          <span class="tl-badge">✓ Minutes, not days</span>
+        </div>
+      </div>
+
+      <div class="tl-row reveal">
+        <div class="tl-cell old">
+          <h4>Manual</h4>
+          <p>Read 50+ CVs with no objective measure of fit.</p>
+          <span class="tl-badge">! Gut-feel ranking</span>
+        </div>
+        <div class="tl-stage"><span class="num">02</span><span class="lbl">Evaluation</span></div>
+        <div class="tl-cell new">
+          <h4>Scored</h4>
+          <p>AI match score against your JD — before a recruiter spends a minute.</p>
+          <span class="tl-badge">✓ Objective, explained</span>
+        </div>
+      </div>
+
+      <div class="tl-row reveal">
+        <div class="tl-cell old">
+          <h4>Generic</h4>
+          <p>Mass blasts or 1-by-1 messages averaging 8% reply rate.</p>
+          <span class="tl-badge">! 92% silent inbox</span>
+        </div>
+        <div class="tl-stage"><span class="num">03</span><span class="lbl">Outreach</span></div>
+        <div class="tl-cell new">
+          <h4>Personalised</h4>
+          <p>Tailored sequences sent automatically — reply rates 3× higher.</p>
+          <span class="tl-badge">✓ 23% reply rate</span>
+        </div>
+      </div>
+
+      <div class="tl-row reveal">
+        <div class="tl-cell old">
+          <h4>10 hours lost</h4>
+          <p>30-min phone screens × 20 candidates = a working day, gone.</p>
+          <span class="tl-badge">! No real signal</span>
+        </div>
+        <div class="tl-stage"><span class="num">04</span><span class="lbl">Skill Check</span></div>
+        <div class="tl-cell new">
+          <h4>AI-assessed</h4>
+          <p>Scored skill report per candidate, broken down by competency.</p>
+          <span class="tl-badge">✓ 23-min portal</span>
+        </div>
+      </div>
+
+      <div class="tl-row reveal">
+        <div class="tl-cell old">
+          <h4>Trust the CV</h4>
+          <p>No way to verify the skills a candidate claims.</p>
+          <span class="tl-badge">! Hire-then-discover</span>
+        </div>
+        <div class="tl-stage"><span class="num">05</span><span class="lbl">Integrity</span></div>
+        <div class="tl-cell new">
+          <h4>Monitored</h4>
+          <p>Camera and activity signals verify the result is the candidate's own.</p>
+          <span class="tl-badge">✓ Verified work</span>
+        </div>
+      </div>
+
+      <div class="tl-row reveal">
+        <div class="tl-cell old">
+          <h4>Generic questions</h4>
+          <p>Google a list. Ask the same things you asked the last 50 people.</p>
+          <span class="tl-badge">! Same conversation</span>
+        </div>
+        <div class="tl-stage"><span class="num">06</span><span class="lbl">Interview Prep</span></div>
+        <div class="tl-cell new">
+          <h4>Targeted</h4>
+          <p>AI-generated guide focused on that candidate's gaps and strengths.</p>
+          <span class="tl-badge">✓ Specific, sharp</span>
+        </div>
+      </div>
+
+      <div class="tl-row reveal">
+        <div class="tl-cell old">
+          <h4>Reject 80%-ready</h4>
+          <p>Good candidates lost because of one missing skill.</p>
+          <span class="tl-badge">! Pipeline leakage</span>
+        </div>
+        <div class="tl-stage"><span class="num">07</span><span class="lbl">Training Gaps</span></div>
+        <div class="tl-cell new">
+          <h4>Coached</h4>
+          <p>Training plan, re-assessment, then hire when they're ready.</p>
+          <span class="tl-badge">✓ Grow into the role</span>
+        </div>
+      </div>
+
+      <div class="tl-row reveal">
+        <div class="tl-cell old">
+          <h4>Chaos</h4>
+          <p>Spreadsheets, email threads, Slack channels — no single source.</p>
+          <span class="tl-badge">! Where's that CV?</span>
+        </div>
+        <div class="tl-stage"><span class="num">08</span><span class="lbl">Visibility</span></div>
+        <div class="tl-cell new">
+          <h4>One board</h4>
+          <p>Every recruiter, every candidate, every next action — visible.</p>
+          <span class="tl-badge">✓ One pipeline</span>
+        </div>
+      </div>
+
+      <div class="tl-row reveal">
+        <div class="tl-cell old">
+          <h4>Back-and-forth</h4>
+          <p>Email tag, calendar conflicts, "does Thursday work?"</p>
+          <span class="tl-badge">! 3 days to a slot</span>
+        </div>
+        <div class="tl-stage"><span class="num">09</span><span class="lbl">Scheduling</span></div>
+        <div class="tl-cell new">
+          <h4>One click</h4>
+          <p>Meet link, calendar invite, candidate confirmation — instant.</p>
+          <span class="tl-badge">✓ Booked in seconds</span>
+        </div>
+      </div>
+
+      <div class="tl-row reveal">
+        <div class="tl-cell old">
+          <h4>Nothing</h4>
+          <p>Nothing, or a manually updated sheet that's stale by Tuesday.</p>
+          <span class="tl-badge">! No insight</span>
+        </div>
+        <div class="tl-stage"><span class="num">10</span><span class="lbl">Analytics</span></div>
+        <div class="tl-cell new">
+          <h4>Live</h4>
+          <p>Time-to-hire, source quality, offer outcomes — live, by team.</p>
+          <span class="tl-badge">✓ Daily insight</span>
+        </div>
+      </div>
+
+      <div class="tl-row reveal">
+        <div class="tl-cell old">
+          <h4>Reactive</h4>
+          <p>Recruit only when a role opens. Start from zero every time.</p>
+          <span class="tl-badge">! Cold start, every time</span>
+        </div>
+        <div class="tl-stage"><span class="num">11</span><span class="lbl">Talent Marketing</span></div>
+        <div class="tl-cell new">
+          <h4>Always-on</h4>
+          <p>Warm candidates already in the pipeline when headcount opens.</p>
+          <span class="tl-badge">✓ Bench ready</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Calculator -->
+<section class="calc-section" id="calculator">
+  <div class="aurora coral"></div>
+  <div class="container">
+    <div class="calc-grid">
+      <div class="calc-controls reveal">
+        <span class="pill"><span class="dot"></span>Calculator</span>
+        <h2>What's manual screening costing you?</h2>
+        <p>Move the sliders. See the hours and rupees you're spending on work the AI does in minutes.</p>
+
+        <div class="calc-slider-row">
+          <div class="calc-slider-head">
+            <label>Roles open at once</label>
+            <span class="calc-slider-val" id="v-roles">5</span>
+          </div>
+          <input type="range" id="r-roles" min="1" max="20" step="1" value="5">
+        </div>
+
+        <div class="calc-slider-row">
+          <div class="calc-slider-head">
+            <label>Candidates screened per role</label>
+            <span class="calc-slider-val" id="v-cands">30</span>
+          </div>
+          <input type="range" id="r-cands" min="10" max="100" step="5" value="30">
+        </div>
+
+        <div class="calc-slider-row">
+          <div class="calc-slider-head">
+            <label>Hours per candidate, manually</label>
+            <span class="calc-slider-val" id="v-hrs">3.5</span>
+          </div>
+          <input type="range" id="r-hrs" min="1" max="8" step="0.5" value="3.5">
+        </div>
+      </div>
+
+      <div class="calc-output reveal" data-delay="1">
+        <div class="calc-ring-wrap">
+          <svg viewBox="0 0 200 200">
+            <defs>
+              <linearGradient id="ring-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#E97A52"/>
+                <stop offset="100%" stop-color="#ffae8a"/>
+              </linearGradient>
+            </defs>
+            <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="12"/>
+            <circle id="ring" cx="100" cy="100" r="86" fill="none" stroke="url(#ring-grad)" stroke-width="12"
+                    stroke-linecap="round" stroke-dasharray="540"
+                    stroke-dashoffset="100"
+                    style="filter: drop-shadow(0 0 12px rgba(201,100,66,0.7)); transition: stroke-dashoffset .6s cubic-bezier(.2,.7,.2,1);"/>
+          </svg>
+          <div class="calc-ring-center">
+            <div class="calc-ring-pct"><span id="o-pct">82</span>%</div>
+            <div class="calc-ring-lbl">Time saved</div>
+          </div>
+        </div>
+
+        <div class="calc-stats">
+          <div class="calc-stat">
+            <span class="k">Hours / month manual</span>
+            <span class="v"><span id="o-manual">525</span> hrs</span>
+          </div>
+          <div class="calc-stat">
+            <span class="k">Hours / month with RecruIQ</span>
+            <span class="v"><span id="o-auto">94</span> hrs</span>
+          </div>
+          <div class="calc-stat highlight">
+            <span class="k">Recruiter cost saved / month</span>
+            <span class="v">₹<span id="o-cost">2.16</span>L</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Hidden Costs -->
+<section class="costs-section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="pill"><span class="dot"></span>The hidden costs</span>
+      <h2>The cost of getting it wrong.</h2>
+      <p>Slow, imprecise hiring leaks money quietly. Here's what it adds up to.</p>
+    </div>
+
+    <div class="costs-grid">
+      <div class="card cost-card reveal">
+        <span class="cost-tag">Bad Hire Cost</span>
+        <div>
+          <div class="cost-num">3× annual salary</div>
+          <div class="cost-lbl">Average all-in cost of a bad hire — recruiting, ramp, lost productivity, exit.</div>
+        </div>
+      </div>
+      <div class="card cost-card reveal" data-delay="1">
+        <span class="cost-tag">Time to Hire</span>
+        <div>
+          <div class="cost-num">42 days</div>
+          <div class="cost-lbl">The average traditional time-to-fill — six weeks of an empty seat.</div>
+        </div>
+      </div>
+      <div class="card cost-card reveal" data-delay="2">
+        <span class="cost-tag">Top Complaint</span>
+        <div>
+          <div class="cost-num">68%</div>
+          <div class="cost-lbl">Of hiring managers say skill mismatch is their #1 hiring challenge.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Before/After -->
+<section class="ba-section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="pill indigo"><span class="dot"></span>Day in the life</span>
+      <h2>What a Tuesday looks like.</h2>
+      <p>Same recruiter. Same five open roles. Two different worlds.</p>
+    </div>
+
+    <div class="ba-grid">
+      <div class="ba-card before reveal">
+        <h3>Before</h3>
+        <div class="ttl">Manual chaos. Inbox triage. Spreadsheets.</div>
+        <div class="ba-stream">
+          <div class="ba-line"><span class="time">9:00</span><span>Open 3 spreadsheets and yesterday's notes. Where did the CV go?</span></div>
+          <div class="ba-line"><span class="time">9:40</span><span>Manual search across networks. Re-search the same names you searched last week.</span></div>
+          <div class="ba-line"><span class="time">11:00</span><span>Copy-paste outreach to 28 candidates. Hope one replies.</span></div>
+          <div class="ba-line"><span class="time">12:30</span><span>Phone screen #1. Re-explain the role for the fifth time today.</span></div>
+          <div class="ba-line"><span class="time">14:00</span><span>Email tag with two candidates over a 30-minute slot.</span></div>
+          <div class="ba-line"><span class="time">16:00</span><span>Manager pings: "Where are we on the senior PM role?" — open Slack search.</span></div>
+          <div class="ba-line"><span class="time">17:30</span><span>Update the spreadsheet. Realise tomorrow looks identical.</span></div>
+        </div>
+      </div>
+
+      <div class="ba-card after reveal" data-delay="1">
+        <h3>After</h3>
+        <div class="ttl">Calm decisions. One board. Real signal.</div>
+        <div class="ba-stream">
+          <div class="ba-line"><span class="time">9:00</span><span>Pipeline opens. 4 new scored candidates overnight, top match 96.<span class="ok">✓</span></span></div>
+          <div class="ba-line"><span class="time">9:20</span><span>Approve outreach for 3 candidates — sequences run themselves.<span class="ok">✓</span></span></div>
+          <div class="ba-line"><span class="time">10:30</span><span>Review 2 completed skill reports. Reject 1, schedule 1.<span class="ok">✓</span></span></div>
+          <div class="ba-line"><span class="time">11:00</span><span>Read AI-generated interview guide for tomorrow's call.<span class="ok">✓</span></span></div>
+          <div class="ba-line"><span class="time">13:30</span><span>Manager checks the live dashboard themselves — no ping.<span class="ok">✓</span></span></div>
+          <div class="ba-line"><span class="time">15:00</span><span>Spin up a new campaign for the role opening in Q3.<span class="ok">✓</span></span></div>
+          <div class="ba-line"><span class="time">17:00</span><span>Done. Hires moved forward. Tomorrow is already lined up.<span class="ok">✓</span></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section style="position:relative;padding:120px 0;text-align:center;overflow:hidden;border-top:1px solid var(--border);">
+  <div class="aurora coral" style="width:800px;height:600px;top:-150px;left:50%;transform:translateX(-50%);opacity:0.4;"></div>
+  <div class="aurora indigo" style="width:600px;height:500px;bottom:-150px;right:5%;opacity:0.25;"></div>
+  <div class="container">
+    <h2 class="reveal" style="margin-bottom:20px;font-size:clamp(2rem,5vw,3.6rem);"><span class="grad-text">Your competitors are still doing this manually.</span></h2>
+    <p class="reveal" data-delay="1" style="font-size:18px;max-width:580px;margin:0 auto 36px;">Stop bleeding hours into work that the AI does in minutes.</p>
+    <div class="reveal" data-delay="2" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a href="contact.html" class="btn btn-primary btn-lg">Book a Demo →</a>
+      <a href="contact.html" class="btn btn-ghost btn-lg">Start Free Trial →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <span class="logo-dot"></span>
+          Recru<span style="color:var(--coral-bright)">IQ</span>
+        </a>
+        <p>Hire with intelligence. Built for recruiters in India 🇮🇳</p>
+      </div>
+      <div>
+        <h5>Product</h5>
+        <ul>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="compare.html">Compare</a></li>
+          <li><a href="#">Changelog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Security</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 RecruIQ · All rights reserved.</span>
+      <div class="footer-social">
+        <a href="https://linkedin.com/company/recruiq" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.65-1.85 3.39-1.85 3.62 0 4.29 2.38 4.29 5.48v6.26zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+        <a href="https://x.com/recruiq" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+// Activate timeline rows when they enter the viewport (so the spine glows)
+(function() {
+  const rows = document.querySelectorAll('.tl-row');
+  if (!rows.length || !('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.25 });
+  rows.forEach(r => io.observe(r));
+})();
+
+// Calculator
+(function() {
+  const rolesEl = document.getElementById('r-roles');
+  const candsEl = document.getElementById('r-cands');
+  const hrsEl = document.getElementById('r-hrs');
+  const vR = document.getElementById('v-roles');
+  const vC = document.getElementById('v-cands');
+  const vH = document.getElementById('v-hrs');
+  const oManual = document.getElementById('o-manual');
+  const oAuto = document.getElementById('o-auto');
+  const oCost = document.getElementById('o-cost');
+  const oPct = document.getElementById('o-pct');
+  const ring = document.getElementById('ring');
+  const HOURLY_INR = 500; // ₹500/hr blended recruiter cost
+  const C = 540; // circumference baked into stroke-dasharray
+  function recalc() {
+    const roles = +rolesEl.value;
+    const cands = +candsEl.value;
+    const hrs = +hrsEl.value;
+    vR.textContent = roles;
+    vC.textContent = cands;
+    vH.textContent = hrs.toFixed(1);
+    const manual = roles * cands * hrs;
+    const auto = Math.round(manual * 0.18);
+    const saved = manual - auto;
+    const pct = Math.round((saved / manual) * 100);
+    const costSaved = saved * HOURLY_INR; // INR
+    oManual.textContent = Math.round(manual);
+    oAuto.textContent = auto;
+    oPct.textContent = pct;
+    // Format INR in Lakhs (1 L = 100,000)
+    const lakhs = costSaved / 100000;
+    oCost.textContent = lakhs >= 10 ? lakhs.toFixed(1) : lakhs.toFixed(2);
+    ring.setAttribute('stroke-dashoffset', String(C - (C * pct / 100)));
+  }
+  [rolesEl, candsEl, hrsEl].forEach(el => el.addEventListener('input', recalc));
+  recalc();
+})();
+</script>
+</body>
+</html>

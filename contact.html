@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Book a Demo · RecruIQ</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.emailjs.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.emailjs.com; frame-ancestors 'none';">
+<link rel="icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="theme-color" content="#C96442">
+<meta name="description" content="Book a free 30-minute demo of RecruIQ. See AI-powered recruitment in your workflow.">
+<meta property="og:title" content="Book a Demo · RecruIQ">
+<meta property="og:description" content="See RecruIQ in your workflow. Free 30-minute demo, no credit card required.">
+<meta property="og:image" content="https://recru-iq.com/og-image.png">
+<meta property="og:url" content="https://recru-iq.com/contact.html">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="shared.css">
+<style>
+.contact-top {
+  position: relative;
+  padding-top: 160px;
+  padding-bottom: 80px;
+  overflow: hidden;
+}
+.contact-top .aurora.coral { width: 700px; height: 600px; top: -150px; left: -150px; opacity: 0.4; }
+.contact-top .aurora.indigo { width: 600px; height: 500px; top: 80px; right: -100px; opacity: 0.3; }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 80px;
+  align-items: start;
+  position: relative;
+  z-index: 2;
+}
+
+.contact-left h1 {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  letter-spacing: -0.03em;
+  margin-bottom: 22px;
+}
+.contact-left .lead {
+  font-size: 18px;
+  color: var(--text-dim);
+  margin-bottom: 40px;
+  max-width: 480px;
+}
+
+.expect-box {
+  margin-bottom: 36px;
+}
+.expect-box h3 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--coral-bright);
+  margin-bottom: 18px;
+}
+.expect-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.expect-list li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.expect-list li::before {
+  content: '';
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: rgba(201,100,66,0.12);
+  border: 1px solid rgba(201,100,66,0.4);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%23E97A52' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='2 6 5 9 10 3'/></svg>");
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+.contact-info-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 14px;
+  color: var(--text-dim);
+}
+.contact-info-row .ic {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  background: rgba(201,100,66,0.08);
+  border: 1px solid rgba(201,100,66,0.22);
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  color: var(--coral-bright);
+  flex-shrink: 0;
+}
+.contact-info-row .ic svg { width: 16px; height: 16px; }
+.contact-info-row strong { color: var(--text); font-weight: 500; }
+
+/* Form card */
+.contact-form {
+  padding: 36px;
+  position: relative;
+}
+.contact-form::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  pointer-events: none;
+  background: radial-gradient(600px circle at 100% 0%, rgba(201,100,66,0.08), transparent 50%);
+}
+.contact-form h2 {
+  font-size: 22px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.contact-form .sub {
+  font-size: 13px;
+  color: var(--text-faint);
+  margin-bottom: 24px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.06em;
+}
+
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.row-2 .field { margin-bottom: 0; }
+
+.check-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.field-label {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* Success state */
+.success-state {
+  display: none;
+  text-align: center;
+  padding: 60px 36px;
+}
+.success-state.show { display: block; }
+.success-state .check-ring {
+  width: 88px; height: 88px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--coral) 0%, #e07a55 100%);
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  margin-bottom: 24px;
+  color: white;
+  box-shadow: 0 0 60px rgba(201,100,66,0.6);
+  animation: scaleIn .6s cubic-bezier(.2,1.4,.4,1) both;
+}
+.success-state .check-ring svg { width: 40px; height: 40px; }
+@keyframes scaleIn {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.success-state h3 {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-family: 'Space Grotesk', sans-serif;
+}
+.success-state p {
+  font-size: 15px;
+  color: var(--text-dim);
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+@media (max-width: 980px) { .contact-grid { grid-template-columns: 1fr; gap: 40px; } }
+@media (max-width: 560px) {
+  .row-2 { grid-template-columns: 1fr; }
+  .check-grid { grid-template-columns: 1fr; }
+}
+/* Override shared.css display:none so label→input click forwarding works in all browsers */
+.check-row input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+</style>
+</head>
+<body data-page="contact">
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-dot"></span>
+      Recru<span style="color:var(--coral-bright)">IQ</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#product">Product</a></li>
+      <li><a href="index.html#how">How It Works</a></li>
+      <li><a href="compare.html">Compare</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="contact.html" class="btn btn-sm" style="border-color:transparent;background:transparent;">Sign In</a>
+      <a href="contact.html" class="btn btn-primary btn-sm">Book a Demo →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Header + form -->
+<section class="contact-top">
+  <div class="aurora coral"></div>
+  <div class="aurora indigo"></div>
+
+  <div class="container contact-grid">
+    <div class="contact-left">
+      <div class="reveal"><span class="pill" style="margin-bottom:24px;"><span class="dot"></span>Book your demo</span></div>
+      <h1 class="reveal" data-delay="1">See <span class="grad-text">RecruIQ</span> in your workflow.</h1>
+      <p class="lead reveal" data-delay="2">Book a free 30-minute demo. We'll tailor it to your exact recruiting challenge.</p>
+
+      <div class="expect-box reveal" data-delay="3">
+        <h3>What to expect</h3>
+        <ul class="expect-list">
+          <li>Live walkthrough of the product</li>
+          <li>We'll build a sample pipeline for your role type</li>
+          <li>Q&amp;A with our team</li>
+          <li>No sales pressure</li>
+        </ul>
+      </div>
+
+      <div class="contact-info reveal" data-delay="4">
+        <div class="contact-info-row">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+          <span><strong>hello@recru-iq.com</strong> — replies within 1 business day</span>
+        </div>
+        <div class="contact-info-row">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>
+          <span><strong>30-minute slot</strong> · weekdays 10 AM – 6 PM IST</span>
+        </div>
+        <div class="contact-info-row">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+          <span><strong>Your data stays yours</strong> · we never share or store sample CVs</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card contact-form reveal" data-delay="2" id="form-card">
+      <div id="form-view">
+        <h2>Request your demo</h2>
+        <p class="sub">~ 60 SECONDS · NO CREDIT CARD</p>
+
+        <form id="demo-form" novalidate>
+          <div class="field">
+            <label for="name">Full name *</label>
+            <input id="name" name="name" type="text" placeholder="Anjali Sharma" required>
+          </div>
+
+          <div class="row-2">
+            <div class="field">
+              <label for="email">Work email *</label>
+              <input id="email" name="email" type="email" placeholder="anjali@company.com" required>
+            </div>
+            <div class="field">
+              <label for="company">Company name *</label>
+              <input id="company" name="company" type="text" placeholder="Acme Inc." required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="size">Team size</label>
+            <select id="size" name="size">
+              <option>1–10 employees</option>
+              <option>11–50 employees</option>
+              <option selected>51–200 employees</option>
+              <option>200+ employees</option>
+            </select>
+          </div>
+
+          <div>
+            <span class="field-label">Which workflow interests you?</span>
+            <div class="check-grid">
+              <label class="check-row checked" data-cb><input type="checkbox" name="wf" value="standard" checked><span class="check-box"></span>Standard Hiring</label>
+              <label class="check-row" data-cb><input type="checkbox" name="wf" value="assess"><span class="check-box"></span>Assess &amp; Train</label>
+              <label class="check-row" data-cb><input type="checkbox" name="wf" value="campaign"><span class="check-box"></span>Talent Marketing</label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="ch">Biggest hiring challenge? <span style="text-transform:none;color:var(--text-faint);">(optional)</span></label>
+            <textarea id="ch" name="challenge" placeholder="e.g. We're spending 12 hours/week screening for senior backend roles and still missing the right people."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;margin-top:8px;">
+            See Demo →
+          </button>
+
+          <p style="font-size:11px;color:var(--text-faint);margin-top:18px;text-align:center;font-family:'JetBrains Mono',monospace;letter-spacing:0.06em;">
+            BY SUBMITTING YOU AGREE TO OUR PRIVACY POLICY
+          </p>
+        </form>
+      </div>
+
+      <div class="success-state" id="success-view">
+        <div class="check-ring">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="4 12 10 18 20 6"/>
+          </svg>
+        </div>
+        <h3>You're on the calendar.</h3>
+        <p>We'll email you within one business day to confirm a time. Talk soon.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trust strip -->
+<div class="trust-bar">
+  <div class="container trust-bar-inner">
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Encrypted at rest and in transit</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 21h18M5 21V10l7-5 7 5v11"/></svg>Enterprise-grade infrastructure</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 7-7M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20z"/></svg>Privacy-first design</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Built for reliability</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 17l9 5 9-5"/></svg>Bank-grade encryption</span>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <span class="logo-dot"></span>
+          Recru<span style="color:var(--coral-bright)">IQ</span>
+        </a>
+        <p>Hire with intelligence. Built for recruiters in India 🇮🇳</p>
+      </div>
+      <div>
+        <h5>Product</h5>
+        <ul>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="compare.html">Compare</a></li>
+          <li><a href="#">Changelog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Security</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 RecruIQ · All rights reserved.</span>
+      <div class="footer-social">
+        <a href="https://linkedin.com/company/recruiq" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.65-1.85 3.39-1.85 3.62 0 4.29 2.38 4.29 5.48v6.26zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+        <a href="https://x.com/recruiq" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+
+<!-- Checkbox interactions — isolated so EmailJS loading never affects them -->
+<script>
+document.querySelectorAll('[data-cb]').forEach(row => {
+  const input = row.querySelector('input');
+  input.addEventListener('change', () => {
+    row.classList.toggle('checked', input.checked);
+  });
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+// ── EmailJS config ──
+const EMAILJS_SERVICE_ID  = 'service_pq5awi5';
+const EMAILJS_TEMPLATE_ID = 'template_4gog36l';
+const EMAILJS_PUBLIC_KEY  = 'YKQdGbvts8sNfowgl';
+emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+// Submit
+document.getElementById('demo-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const f = e.target;
+
+  // Validation — empty check + email format
+  const required = ['name', 'email', 'company'];
+  let ok = true;
+  required.forEach(k => {
+    const el = f.elements[k];
+    el.style.borderColor = '';
+    if (!el.value.trim()) {
+      el.style.borderColor = 'rgba(239,68,68,0.6)';
+      ok = false;
+    }
+  });
+  const emailEl = f.elements['email'];
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailEl.value.trim());
+  if (!emailValid) {
+    emailEl.style.borderColor = 'rgba(239,68,68,0.6)';
+    ok = false;
+  }
+  if (!ok) return;
+
+  // Gather workflow checkboxes
+  const workflows = [...f.querySelectorAll('input[name="wf"]:checked')].map(c => c.value).join(', ');
+
+  const btn = f.querySelector('button[type=submit]');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  try {
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      from_name:  f.elements['name'].value.trim(),
+      from_email: f.elements['email'].value.trim(),
+      company:    f.elements['company'].value.trim(),
+      team_size:  f.elements['size'].value,
+      workflows:  workflows || 'None selected',
+      challenge:  f.elements['challenge'].value.trim() || 'Not provided',
+    });
+    window.location.href = 'https://demo.recru-iq.com';
+  } catch (err) {
+    console.error('EmailJS error:', err);
+    btn.textContent = 'See Demo →';
+    btn.disabled = false;
+    btn.style.boxShadow = '0 0 0 2px rgba(239,68,68,0.5)';
+    alert('Something went wrong. Please email hello@recru-iq.com directly.');
+  }
+});
+</script>
+</body>
+</html>
