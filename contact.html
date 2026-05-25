@@ -454,7 +454,7 @@ document.getElementById('demo-form').addEventListener('submit', async (e) => {
       workflows:  workflows || 'None selected',
       challenge:  f.elements['challenge'].value.trim() || 'Not provided',
     });
-    window.location.href = 'https://demo.recru-iq.com';
+    window.location.href = 'https://recru-iq-demo.vercel.app';
   } catch (err) {
     console.error('EmailJS error:', err);
     btn.textContent = 'See Demo →';
