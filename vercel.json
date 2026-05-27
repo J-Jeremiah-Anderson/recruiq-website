@@ -1,4 +1,6 @@
 {
+  "cleanUrls": false,
+  "trailingSlash": false,
   "headers": [
     {
       "source": "/(candidate-portal|interviewer-portal).html",
