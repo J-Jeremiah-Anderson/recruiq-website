@@ -1,0 +1,980 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Candidate Portal — RecruIQ Demo</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="shared.css">
+<style>
+.portal-wrap { max-width: 1000px; margin: 0 auto; padding: 100px 24px 80px; }
+
+/* Header gradient */
+.portal-header {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  border-radius: 16px;
+  padding: 28px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 0 60px -10px rgba(99,102,241,0.6);
+}
+.portal-header-left .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 6px;
+}
+.portal-header-left .name { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: #fff; }
+.portal-header-left .sub { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 4px; }
+.portal-header-right { text-align: right; }
+.portal-header-right .date-label { font-size: 11px; color: rgba(255,255,255,0.6); }
+.portal-header-right .date-val { font-weight: 700; color: #fff; font-size: 14px; margin-top: 2px; }
+.status-badge {
+  display: inline-block;
+  margin-top: 10px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Stage pipeline */
+.stage-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+}
+.stage-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+  margin-bottom: 16px;
+}
+.stage-pipeline {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.stage-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-width: 80px;
+  position: relative;
+}
+.stage-connector {
+  flex: 1;
+  height: 2px;
+  margin-top: 15px;
+  border-radius: 2px;
+  min-width: 20px;
+}
+.stage-dot {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800;
+  border: 2px solid;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+.stage-dot.done { background: #4f46e5; border-color: #4f46e5; color: #fff; }
+.stage-dot.active {
+  background: transparent;
+  border-color: #4f46e5;
+  color: #4f46e5;
+  box-shadow: 0 0 0 5px rgba(79,70,229,0.18);
+}
+.stage-dot.future { background: rgba(255,255,255,0.04); border-color: var(--border); color: var(--text-faint); }
+.stage-name { font-size: 11px; font-weight: 500; margin-top: 8px; white-space: nowrap; text-align: center; }
+.stage-date { font-size: 10px; color: var(--text-faint); font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
+
+/* Tab bar */
+.tab-bar {
+  display: flex;
+  gap: 4px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 24px;
+  width: fit-content;
+}
+.tab-btn {
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-faint);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.tab-btn.active {
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-weight: 600;
+}
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+/* Portal card */
+.p-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 24px;
+  margin-bottom: 16px;
+  transition: border-color .2s;
+}
+.p-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.p-card-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+  margin-bottom: 4px;
+}
+.p-card-value { font-size: 13px; color: var(--text-dim); }
+
+/* Alert cards */
+.alert-green {
+  background: rgba(16,185,129,0.06);
+  border: 1px solid rgba(16,185,129,0.25);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.alert-amber {
+  background: rgba(245,158,11,0.07);
+  border: 1px solid rgba(245,158,11,0.25);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.alert-icon { font-size: 20px; flex-shrink: 0; }
+.alert-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+.alert-green .alert-title { color: #10b981; }
+.alert-amber .alert-title { color: #f59e0b; }
+.alert-body { font-size: 13px; }
+.alert-green .alert-body { color: rgba(110,231,183,0.85); }
+.alert-amber .alert-body { color: rgba(253,230,138,0.85); }
+
+/* Badge */
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 5px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.badge-green  { color: #10b981; background: rgba(16,185,129,0.12); }
+.badge-amber  { color: #f59e0b; background: rgba(245,158,11,0.12); }
+.badge-indigo { color: #818cf8; background: rgba(99,102,241,0.12); }
+.badge-gray   { color: var(--text-faint); background: rgba(255,255,255,0.06); }
+.badge-coral  { color: var(--coral-bright); background: rgba(201,100,66,0.12); }
+
+/* Section heading inside portal */
+.p-h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+/* Timeline */
+.timeline { display: flex; flex-direction: column; }
+.tl-item { display: flex; gap: 14px; padding-bottom: 18px; position: relative; }
+.tl-item:last-child { padding-bottom: 0; }
+.tl-line {
+  position: absolute;
+  left: 11px; top: 26px;
+  width: 2px;
+  height: calc(100% - 26px);
+  border-radius: 2px;
+}
+.tl-dot {
+  width: 24px; height: 24px;
+  border-radius: 50%; flex-shrink: 0; z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800;
+  border: 2px solid;
+}
+.tl-dot.done { background: #4f46e5; border-color: #4f46e5; color: #fff; }
+.tl-dot.future { background: rgba(255,255,255,0.03); border-color: var(--border); color: var(--text-faint); }
+.tl-name { font-size: 13px; font-weight: 500; margin-top: 3px; }
+.tl-date { font-size: 11px; color: var(--text-faint); font-family: 'JetBrains Mono', monospace; }
+
+/* Interview card */
+.iv-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 24px;
+  margin-bottom: 16px;
+}
+.iv-card.upcoming { border-color: rgba(79,70,229,0.35); }
+.iv-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+.iv-title { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 700; color: var(--text); }
+.iv-meta { font-size: 12px; color: var(--text-faint); margin-top: 4px; font-family: 'JetBrains Mono', monospace; }
+.iv-feedback {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--border);
+  border-left: 3px solid #4f46e5;
+  border-radius: 0 10px 10px 0;
+  padding: 14px 16px;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.65;
+  margin-top: 14px;
+}
+.iv-strengths { display: flex; gap: 32px; margin-top: 12px; flex-wrap: wrap; }
+.iv-str-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+
+/* Button */
+.p-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: #4f46e5;
+  color: #fff; border: none; border-radius: 9px;
+  padding: 9px 20px; font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: 'Inter', sans-serif;
+  transition: opacity .15s, transform .15s;
+}
+.p-btn:hover { opacity: .88; transform: translateY(-1px); }
+.p-btn.outline {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+}
+.p-btn.green { background: #059669; }
+.p-btn.danger { background: #ef4444; }
+
+/* Assessment card */
+.as-card {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 24px;
+  margin-bottom: 16px;
+  background: var(--card);
+}
+.as-card.pending { background: rgba(245,158,11,0.04); border-color: rgba(245,158,11,0.25); }
+.as-card.done    { background: var(--card); }
+.as-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.as-title { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.as-by { font-size: 12px; color: var(--text-faint); font-family: 'JetBrains Mono', monospace; }
+.as-types { display: flex; gap: 10px; margin-top: 12px; }
+.as-type-dot {
+  width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px;
+}
+
+/* Score bar */
+.score-wrap { display: flex; align-items: center; gap: 14px; margin-top: 12px; }
+.score-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; }
+.score-fill { height: 100%; border-radius: 4px; }
+
+/* Results */
+.round-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.round-row:last-child { border-bottom: none; }
+.round-name { font-size: 13px; font-weight: 500; color: var(--text); }
+.round-note { font-size: 12px; color: var(--text-faint); margin-top: 2px; }
+.round-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.round-date { font-size: 11px; color: var(--text-faint); font-family: 'JetBrains Mono', monospace; }
+
+/* ─── Assessment Runner ─── */
+#runner { display: none; }
+#runner.active { display: block; }
+#portal-main { display: block; }
+#portal-main.hidden { display: none; }
+
+.runner-header {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.progress-bar-wrap { background: rgba(255,255,255,0.06); border-radius: 4px; height: 4px; margin-top: 10px; }
+.progress-bar-fill { height: 100%; border-radius: 4px; background: #4f46e5; transition: width .3s; }
+
+.q-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px;
+  margin-bottom: 20px;
+}
+.q-text { font-size: 16px; font-weight: 600; color: var(--text); line-height: 1.55; margin-bottom: 24px; }
+
+/* MCQ options */
+.mcq-option {
+  display: flex; align-items: center; gap: 14px;
+  background: rgba(255,255,255,0.025);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 13px 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+  font-size: 14px;
+  color: var(--text-dim);
+}
+.mcq-option:hover { border-color: rgba(79,70,229,0.5); background: rgba(79,70,229,0.06); }
+.mcq-option.selected { border-color: #4f46e5; background: rgba(79,70,229,0.12); color: #fff; }
+.mcq-letter {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800;
+  color: var(--text-faint);
+  flex-shrink: 0;
+  font-family: 'JetBrains Mono', monospace;
+  border: 1px solid var(--border);
+}
+.mcq-option.selected .mcq-letter { background: #4f46e5; color: #fff; border-color: #4f46e5; }
+
+/* Text answer */
+.text-answer {
+  width: 100%;
+  background: rgba(255,255,255,0.03);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: vertical;
+  min-height: 140px;
+  outline: none;
+  transition: border-color .2s;
+}
+.text-answer:focus { border-color: rgba(79,70,229,0.5); }
+.char-count { font-size: 11px; color: var(--text-faint); text-align: right; margin-top: 6px; font-family: 'JetBrains Mono', monospace; }
+
+/* Video section */
+.video-viewport {
+  background: #0a0a0f;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 14px;
+}
+.video-viewport video { width: 100%; height: 100%; object-fit: cover; }
+.video-idle-msg { text-align: center; color: var(--text-faint); }
+.video-idle-msg .icon { font-size: 36px; margin-bottom: 10px; }
+.rec-badge {
+  position: absolute;
+  top: 12px; right: 12px;
+  display: flex; align-items: center; gap: 7px;
+  background: rgba(0,0,0,0.65);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 12px; font-weight: 700;
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+}
+.rec-dot { width: 8px; height: 8px; border-radius: 50%; background: #ef4444; animation: blink 1s step-start infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* Q nav */
+.q-nav { display: flex; justify-content: space-between; align-items: center; }
+
+/* Inline flex buttons */
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+
+@media (max-width: 640px) {
+  .p-card-grid { grid-template-columns: 1fr; }
+  .portal-header { flex-direction: column; gap: 16px; text-align: left; }
+  .portal-header-right { text-align: left; }
+}
+</style>
+</head>
+<body data-page="portal">
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-dot"></span>
+      Recru<span style="color:var(--coral-bright)">IQ</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#product">Product</a></li>
+      <li><a href="compare.html">Compare</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="interviewer-portal.html">Interviewer Portal</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="index.html" class="btn btn-sm btn-ghost">← Back to site</a>
+      <a href="contact.html" class="btn btn-primary btn-sm">Book a Demo →</a>
+    </div>
+  </div>
+</nav>
+
+<div class="portal-wrap">
+
+  <!-- Demo banner -->
+  <div style="background:rgba(201,100,66,0.08);border:1px solid rgba(201,100,66,0.3);border-radius:10px;padding:10px 18px;margin-bottom:24px;display:flex;align-items:center;gap:12px;font-size:13px;color:var(--text-dim);">
+    <span style="color:var(--coral-bright);font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;flex-shrink:0;">Demo Mode</span>
+    <span>This is a live preview of the RecruIQ Candidate Portal. All data is simulated.</span>
+    <a href="interviewer-portal.html" style="margin-left:auto;color:var(--coral-bright);font-size:12px;text-decoration:none;white-space:nowrap;">View Interviewer Portal →</a>
+  </div>
+
+  <!-- ── Assessment Runner (hidden until started) ── -->
+  <div id="runner">
+    <div class="runner-header">
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--text)" id="runner-title"></div>
+        <div style="font-size:12px;color:var(--text-faint);margin-top:3px;font-family:'JetBrains Mono',monospace" id="runner-meta"></div>
+        <div class="progress-bar-wrap" style="width:320px;max-width:100%">
+          <div class="progress-bar-fill" id="runner-progress" style="width:0%"></div>
+        </div>
+      </div>
+      <button class="p-btn outline" onclick="exitRunner()">✕ Exit</button>
+    </div>
+    <div id="runner-body"></div>
+    <div class="q-nav" style="margin-top:8px">
+      <button class="p-btn outline" id="btn-back" onclick="prevQ()">← Back</button>
+      <button class="p-btn" id="btn-next" onclick="nextQ()">Next →</button>
+    </div>
+  </div>
+
+  <!-- ── Main portal ── -->
+  <div id="portal-main">
+
+    <!-- Header -->
+    <div class="portal-header">
+      <div class="portal-header-left">
+        <div class="label">Candidate Portal · RecruIQ</div>
+        <div class="name">Priya Sharma</div>
+        <div class="sub">Senior Frontend Engineer · TechCorp · Product Engineering</div>
+      </div>
+      <div class="portal-header-right">
+        <div class="date-label">Applied</div>
+        <div class="date-val">May 18, 2026</div>
+        <div class="status-badge">In Progress</div>
+      </div>
+    </div>
+
+    <!-- Stage pipeline -->
+    <div class="stage-card">
+      <div class="stage-label">Application Progress</div>
+      <div class="stage-pipeline" id="stage-pipeline">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- Tab bar -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab(this,'tab-overview')">📋 Overview</button>
+      <button class="tab-btn" onclick="switchTab(this,'tab-interviews')">🎙 Interviews</button>
+      <button class="tab-btn" onclick="switchTab(this,'tab-assessments')" id="tab-btn-assess">📝 Assessments (1)</button>
+      <button class="tab-btn" onclick="switchTab(this,'tab-results')">📊 Results</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="tab-pane active" id="tab-overview">
+      <div class="alert-green">
+        <div class="alert-icon">🗓</div>
+        <div>
+          <div class="alert-title">Up next: Technical Interview</div>
+          <div class="alert-body">May 30, 2026 · 3:00 PM IST · 60 min · Video call with Arjun Singh &amp; Meera Pillai</div>
+          <div class="btn-row">
+            <button class="p-btn green" style="font-size:12px;padding:7px 16px">Add to Calendar</button>
+            <button class="p-btn outline" style="font-size:12px;padding:7px 16px" onclick="switchTabByKey('tab-interviews')">View Details →</button>
+          </div>
+        </div>
+      </div>
+      <div class="alert-amber" id="assess-alert">
+        <div class="alert-icon">⚠️</div>
+        <div>
+          <div class="alert-title">Action Required</div>
+          <div class="alert-body">You have 1 pending assessment. Complete it before your interview deadline.</div>
+          <div class="btn-row">
+            <button class="p-btn" style="background:#d97706;font-size:12px;padding:7px 16px" onclick="switchTabByKey('tab-assessments')">Go to Assessments →</button>
+          </div>
+        </div>
+      </div>
+      <div class="p-card-grid">
+        <div class="p-card">
+          <div class="p-h2">Job Details</div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div><div class="p-card-label">Role</div><div class="p-card-value">Senior Frontend Engineer</div></div>
+            <div><div class="p-card-label">Company</div><div class="p-card-value">TechCorp</div></div>
+            <div><div class="p-card-label">Department</div><div class="p-card-value">Product Engineering</div></div>
+            <div><div class="p-card-label">Location</div><div class="p-card-value">Remote · India</div></div>
+          </div>
+        </div>
+        <div class="p-card">
+          <div class="p-h2">Timeline</div>
+          <div class="timeline" id="timeline-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interviews -->
+    <div class="tab-pane" id="tab-interviews">
+      <div class="iv-card">
+        <div class="iv-top">
+          <div>
+            <div class="iv-title">HR Screening <span class="badge badge-green" style="font-size:10px;margin-left:6px">✓ Passed</span></div>
+            <div class="iv-meta">Round 1 · May 22 · 11:00 AM · 30 min · Video · Ritika Nair (HR)</div>
+          </div>
+          <span class="badge badge-gray">Completed</span>
+        </div>
+        <div class="iv-feedback">
+          Excellent communication and cultural alignment. Demonstrated genuine passion for the role.
+          <div class="iv-strengths">
+            <div><div class="iv-str-title" style="color:#10b981">Strengths</div>
+              <div style="font-size:12px;color:rgba(110,231,183,0.8)">✓ Clear articulation<br>✓ Strong motivation<br>✓ Cultural fit</div>
+            </div>
+            <div><div class="iv-str-title" style="color:#f59e0b">Areas to grow</div>
+              <div style="font-size:12px;color:rgba(253,230,138,0.8)">→ Expand on leadership examples</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="iv-card upcoming">
+        <div class="iv-top">
+          <div>
+            <div class="iv-title">Technical Interview <span class="badge badge-indigo" style="font-size:10px;margin-left:6px">Upcoming</span></div>
+            <div class="iv-meta">Round 2 · May 30 · 3:00 PM IST · 60 min · Video · Arjun Singh (Tech Lead), Meera Pillai (Senior Eng.)</div>
+          </div>
+          <button class="p-btn" style="font-size:12px;padding:7px 16px">Join Interview →</button>
+        </div>
+        <div style="margin-top:12px;padding:12px 16px;background:rgba(79,70,229,0.06);border:1px solid rgba(79,70,229,0.2);border-radius:10px;font-size:13px;color:var(--text-dim)">
+          🔗 Google Meet link will be sent 30 minutes before the interview starts.
+        </div>
+      </div>
+    </div>
+
+    <!-- Assessments -->
+    <div class="tab-pane" id="tab-assessments">
+      <p style="font-size:13px;color:var(--text-faint);margin-bottom:16px">Assessments assigned by your interviewers. Complete pending ones before your next interview.</p>
+
+      <div class="as-card pending" id="as-card-1">
+        <div class="as-top">
+          <div>
+            <div class="as-title">Frontend Engineering Assessment <span class="badge badge-amber" id="as-badge-1">Not Started</span></div>
+            <div class="as-by">Posted by Arjun Singh · Tech Lead on May 23, 2026 · Due May 28</div>
+          </div>
+          <button class="p-btn" onclick="startAssessment()" id="as-btn-1">Start Assessment →</button>
+        </div>
+        <div class="as-types">
+          <span><span class="as-type-dot" style="background:#0ea5e9"></span><span style="font-size:12px;color:var(--text-faint)">3 MCQ</span></span>
+          <span><span class="as-type-dot" style="background:#8b5cf6"></span><span style="font-size:12px;color:var(--text-faint)">2 Written</span></span>
+          <span><span class="as-type-dot" style="background:#ef4444"></span><span style="font-size:12px;color:var(--text-faint)">1 Video</span></span>
+          <span style="font-size:12px;color:var(--text-faint)">· ~40 min</span>
+        </div>
+        <div id="as-score-1" style="display:none"></div>
+      </div>
+
+      <div class="as-card done">
+        <div class="as-top">
+          <div>
+            <div class="as-title">Logical Reasoning &amp; Aptitude Test <span class="badge badge-green">✓ Completed</span></div>
+            <div class="as-by">Posted by Ritika Nair · HR on May 20, 2026</div>
+          </div>
+          <button class="p-btn outline" style="font-size:12px;padding:7px 16px">View Submission</button>
+        </div>
+        <div class="score-wrap">
+          <span style="font-size:12px;color:var(--text-faint)">Your score</span>
+          <span style="font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;color:#10b981">88%</span>
+          <div class="score-bar"><div class="score-fill" style="width:88%;background:linear-gradient(90deg,#059669,#10b981)"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="tab-pane" id="tab-results">
+      <div class="alert-green" style="margin-bottom:20px">
+        <div class="alert-icon">🎯</div>
+        <div>
+          <div class="alert-title">Process In Progress</div>
+          <div class="alert-body">You are currently in the Interview stage. Results update after each completed round.</div>
+        </div>
+      </div>
+
+      <div class="p-card" style="margin-bottom:16px">
+        <div class="p-h2">Round-by-Round Results</div>
+        <div id="rounds-list"></div>
+      </div>
+
+      <div class="p-card">
+        <div class="p-h2">Assessment Scores</div>
+        <div id="as-results-list"></div>
+      </div>
+    </div>
+
+  </div><!-- /portal-main -->
+</div><!-- /portal-wrap -->
+
+<script src="shared.js"></script>
+<script>
+// ── Data ──────────────────────────────────────────────────────────────────────
+const STAGES = [
+  { key:'applied',    label:'Applied',      date:'May 18', status:'done'   },
+  { key:'screening',  label:'AI Screening', date:'May 19', status:'done'   },
+  { key:'assessment', label:'Assessment',   date:'May 22', status:'done'   },
+  { key:'interview',  label:'Interview',    date:'May 30', status:'active' },
+  { key:'offer',      label:'Offer',        date:null,     status:'future' },
+  { key:'decision',   label:'Decision',     date:null,     status:'future' },
+];
+
+const TIMELINE = [
+  { label:'Applied',             date:'May 18', done:true  },
+  { label:'AI Screening',        date:'May 19', done:true  },
+  { label:'Assessment Sent',     date:'May 23', done:true  },
+  { label:'HR Interview',        date:'May 22', done:true  },
+  { label:'Technical Interview', date:'May 30', done:false },
+  { label:'Hiring Decision',     date:'TBD',    done:false },
+];
+
+const ROUNDS = [
+  { name:'AI Screening',        date:'May 19', status:'passed',  note:'Profile matched 87% of job requirements.' },
+  { name:'HR Interview',        date:'May 22', status:'passed',  note:'Strong communication and cultural fit.'   },
+  { name:'Aptitude Test',       date:'May 22', status:'passed',  note:'Scored 88% on logical reasoning.'         },
+  { name:'Technical Interview', date:'May 30', status:'pending', note:'Scheduled — awaiting completion.'         },
+  { name:'Final Decision',      date:'TBD',    status:'pending', note:''                                         },
+];
+
+const QUESTIONS = [
+  { id:'q1', type:'mcq', q:'Which React hook correctly runs code only once after the component first mounts?',
+    opts:['useEffect(() => {…}, [someValue])','useEffect(() => {…}, [])','useEffect(() => {…})','useMemo(() => {…}, [])'] },
+  { id:'q2', type:'mcq', q:'What is the output of: console.log(typeof null)?',
+    opts:['"null"', '"undefined"', '"object"', '"boolean"'] },
+  { id:'q3', type:'mcq', q:'Which CSS property creates a new stacking context when combined with a non-static position?',
+    opts:['display: flex','position: relative','z-index','margin: auto'] },
+  { id:'q4', type:'text', q:'Explain the difference between controlled and uncontrolled components in React. Give an example use-case for each.' },
+  { id:'q5', type:'text', q:'Describe how you would optimise a React application that is rendering slowly. List tools and techniques.' },
+  { id:'q6', type:'video', q:'Walk us through the most technically challenging project you have worked on. What was the problem, how did you approach it, and what was the outcome?', timeLimit:120 },
+];
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let curQ = 0;
+const answers = {};
+let videoSaved = false;
+let asCompleted = false;
+let stream = null, recorder = null, chunks = [], recInterval = null, recTime = 0;
+const MAX_VIDEO_SEC = 120;
+
+// ── Render pipeline ───────────────────────────────────────────────────────────
+(function renderPipeline() {
+  const c = document.getElementById('stage-pipeline');
+  STAGES.forEach((s, i) => {
+    const item = document.createElement('div');
+    item.style.cssText = 'display:flex;align-items:center;flex:1;min-width:0';
+    const col = document.createElement('div');
+    col.style.cssText = 'display:flex;flex-direction:column;align-items:center;flex:0 0 auto';
+    const dot = document.createElement('div');
+    dot.className = 'stage-dot ' + s.status;
+    dot.textContent = s.status === 'done' ? '✓' : (i + 1);
+    const nm = document.createElement('div');
+    nm.className = 'stage-name';
+    nm.style.color = s.status === 'active' ? '#818cf8' : s.status === 'done' ? '#a1a1aa' : 'var(--text-faint)';
+    nm.textContent = s.label;
+    const dt = document.createElement('div');
+    dt.className = 'stage-date';
+    dt.textContent = s.date || '';
+    col.appendChild(dot); col.appendChild(nm); col.appendChild(dt);
+    item.appendChild(col);
+    if (i < STAGES.length - 1) {
+      const line = document.createElement('div');
+      line.className = 'stage-connector';
+      line.style.background = s.status === 'done' ? '#4f46e5' : 'rgba(255,255,255,0.08)';
+      item.appendChild(line);
+    }
+    c.appendChild(item);
+  });
+})();
+
+// ── Render timeline ───────────────────────────────────────────────────────────
+(function renderTimeline() {
+  const c = document.getElementById('timeline-list');
+  TIMELINE.forEach((t, i) => {
+    const item = document.createElement('div');
+    item.className = 'tl-item';
+    if (i < TIMELINE.length - 1) {
+      const line = document.createElement('div');
+      line.className = 'tl-line';
+      line.style.background = t.done ? '#4f46e5' : 'rgba(255,255,255,0.06)';
+      item.appendChild(line);
+    }
+    const dot = document.createElement('div');
+    dot.className = 'tl-dot ' + (t.done ? 'done' : 'future');
+    dot.textContent = t.done ? '✓' : '';
+    const text = document.createElement('div');
+    text.style.paddingTop = '2px';
+    text.innerHTML = `<div class="tl-name" style="color:${t.done?'var(--text)':'var(--text-faint)'}">${t.label}</div><div class="tl-date">${t.date}</div>`;
+    item.appendChild(dot); item.appendChild(text);
+    c.appendChild(item);
+  });
+})();
+
+// ── Render rounds ─────────────────────────────────────────────────────────────
+(function renderRounds() {
+  const c = document.getElementById('rounds-list');
+  ROUNDS.forEach(r => {
+    const row = document.createElement('div');
+    row.className = 'round-row';
+    const badge = r.status === 'passed'
+      ? '<span class="badge badge-green">✓ Passed</span>'
+      : '<span class="badge badge-gray">Pending</span>';
+    row.innerHTML = `<div><div class="round-name">${r.name}</div>${r.note?`<div class="round-note">${r.note}</div>`:''}</div>
+      <div class="round-right"><span class="round-date">${r.date}</span>${badge}</div>`;
+    c.appendChild(row);
+  });
+  document.getElementById('as-results-list').innerHTML = `
+    <div class="round-row"><div><div class="round-name">Frontend Engineering Assessment</div><div class="round-note">Posted by Arjun Singh · Tech Lead</div></div>
+      <div class="round-right" id="as-result-1"><span class="badge badge-amber">Not submitted</span></div></div>
+    <div class="round-row"><div><div class="round-name">Logical Reasoning &amp; Aptitude Test</div><div class="round-note">Posted by Ritika Nair · HR</div></div>
+      <div class="round-right"><div style="display:flex;align-items:center;gap:10px"><div class="score-bar" style="width:80px"><div class="score-fill" style="width:88%;background:linear-gradient(90deg,#059669,#10b981)"></div></div><span style="font-weight:800;color:#10b981;font-family:'Space Grotesk',sans-serif">88%</span></div></div></div>`;
+})();
+
+// ── Tab switching ─────────────────────────────────────────────────────────────
+function switchTab(btn, paneId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(paneId).classList.add('active');
+}
+function switchTabByKey(paneId) {
+  const map = { 'tab-overview':'📋 Overview','tab-interviews':'🎙 Interviews','tab-assessments':null,'tab-results':'📊 Results' };
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    if (b.textContent.trim().startsWith('📝 Assessments') && paneId === 'tab-assessments') { switchTab(b, paneId); }
+    else if (b.textContent.includes(map[paneId] || '___')) switchTab(b, paneId);
+  });
+}
+
+// ── Assessment runner ─────────────────────────────────────────────────────────
+function startAssessment() {
+  curQ = 0;
+  Object.keys(answers).forEach(k => delete answers[k]);
+  videoSaved = false;
+  document.getElementById('portal-main').classList.add('hidden');
+  document.getElementById('runner').classList.add('active');
+  renderQ();
+}
+function exitRunner() {
+  stopStream();
+  document.getElementById('runner').classList.remove('active');
+  document.getElementById('portal-main').classList.remove('hidden');
+}
+function renderQ() {
+  const q = QUESTIONS[curQ];
+  const total = QUESTIONS.length;
+  document.getElementById('runner-title').textContent = 'Frontend Engineering Assessment';
+  document.getElementById('runner-meta').textContent = `Question ${curQ+1} of ${total} · Posted by Arjun Singh · Tech Lead`;
+  document.getElementById('runner-progress').style.width = Math.round((curQ/total)*100) + '%';
+  document.getElementById('btn-back').disabled = curQ === 0;
+  document.getElementById('btn-next').textContent = curQ === total-1 ? 'Submit Assessment ✓' : 'Next →';
+  updateNextBtn();
+
+  const TYPE_LABEL = { mcq:'Multiple Choice', text:'Written Answer', video:'Video Answer' };
+  const TYPE_COLOR = { mcq:'#0ea5e9', text:'#8b5cf6', video:'#ef4444' };
+  const TYPE_BG = { mcq:'rgba(14,165,233,0.12)', text:'rgba(139,92,246,0.12)', video:'rgba(239,68,68,0.12)' };
+  let html = `<div class="q-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <span style="font-size:12px;color:var(--text-faint);font-family:'JetBrains Mono',monospace">Q${curQ+1} / ${total}</span>
+      <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:5px;color:${TYPE_COLOR[q.type]};background:${TYPE_BG[q.type]};font-family:'JetBrains Mono',monospace">${TYPE_LABEL[q.type]}</span>
+    </div>
+    <div class="q-text">${q.q}</div>`;
+
+  if (q.type === 'mcq') {
+    html += q.opts.map((opt, i) => {
+      const sel = answers[q.id] === i ? 'selected' : '';
+      return `<div class="mcq-option ${sel}" onclick="selectMCQ(${i})"><span class="mcq-letter">${String.fromCharCode(65+i)}</span>${opt}</div>`;
+    }).join('');
+  } else if (q.type === 'text') {
+    const val = answers[q.id] || '';
+    html += `<textarea class="text-answer" id="text-input" oninput="saveText()" placeholder="Type your answer here…">${val}</textarea>
+      <div class="char-count"><span id="char-count">${val.length}</span> chars · min 10</div>`;
+  } else if (q.type === 'video') {
+    html += `<div class="video-viewport" id="video-vp">
+      <video id="live-vid" muted playsinline style="display:none;width:100%;height:100%;object-fit:cover"></video>
+      <video id="play-vid" controls playsinline style="display:none;width:100%;height:100%;object-fit:cover"></video>
+      <div id="vid-idle" class="video-idle-msg">
+        <div class="icon">🎥</div>
+        <div style="font-size:14px;font-weight:600;color:var(--text)">Camera not started</div>
+        <div style="font-size:12px;margin-top:4px">Click "Enable Camera" to begin</div>
+      </div>
+      <div class="rec-badge" id="rec-badge" style="display:none">
+        <span class="rec-dot"></span>
+        <span id="rec-timer">0:00</span>
+      </div>
+    </div>
+    <div id="cam-err" style="display:none;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:8px;padding:10px 14px;font-size:13px;color:#fca5a5;margin-bottom:12px"></div>
+    <div class="btn-row" id="vid-btns">
+      <button class="p-btn" onclick="enableCam()">Enable Camera</button>
+    </div>
+    <div style="font-size:11px;color:var(--text-faint);margin-top:8px;font-family:'JetBrains Mono',monospace">Max 2:00 · Recording stays local for this demo</div>`;
+  }
+
+  html += '</div>';
+  document.getElementById('runner-body').innerHTML = html;
+  updateNextBtn();
+}
+
+function selectMCQ(i) {
+  answers[QUESTIONS[curQ].id] = i;
+  document.querySelectorAll('.mcq-option').forEach((el, idx) => {
+    el.classList.toggle('selected', idx === i);
+    el.querySelector('.mcq-letter').style.background = idx===i?'#4f46e5':'rgba(255,255,255,0.06)';
+    el.querySelector('.mcq-letter').style.color = idx===i?'#fff':'var(--text-faint)';
+    el.querySelector('.mcq-letter').style.borderColor = idx===i?'#4f46e5':'var(--border)';
+  });
+  updateNextBtn();
+}
+function saveText() {
+  const el = document.getElementById('text-input');
+  answers[QUESTIONS[curQ].id] = el.value;
+  document.getElementById('char-count').textContent = el.value.length;
+  updateNextBtn();
+}
+function canAdvance() {
+  const q = QUESTIONS[curQ];
+  if (q.type === 'mcq')   return answers[q.id] !== undefined;
+  if (q.type === 'text')  return (answers[q.id]||'').trim().length >= 10;
+  if (q.type === 'video') return videoSaved;
+  return false;
+}
+function updateNextBtn() {
+  document.getElementById('btn-next').style.opacity = canAdvance() ? '1' : '0.45';
+}
+function nextQ() {
+  if (!canAdvance()) return;
+  if (curQ < QUESTIONS.length - 1) {
+    stopStream(); curQ++; videoSaved = false; renderQ();
+  } else {
+    finishAssessment();
+  }
+}
+function prevQ() {
+  if (curQ > 0) { stopStream(); curQ--; videoSaved = false; renderQ(); }
+}
+function finishAssessment() {
+  stopStream();
+  asCompleted = true;
+  const score = 82 + Math.floor(Math.random()*16);
+  exitRunner();
+  // Update assessment card
+  document.getElementById('as-badge-1').className = 'badge badge-green';
+  document.getElementById('as-badge-1').textContent = '✓ Completed';
+  document.getElementById('as-btn-1').style.display = 'none';
+  document.getElementById('as-card-1').className = 'as-card done';
+  document.getElementById('as-score-1').style.display = 'block';
+  document.getElementById('as-score-1').innerHTML = `<div class="score-wrap"><span style="font-size:12px;color:var(--text-faint)">Your score</span><span style="font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;color:#10b981">${score}%</span><div class="score-bar"><div class="score-fill" style="width:${score}%;background:linear-gradient(90deg,#059669,#10b981)"></div></div></div>`;
+  document.getElementById('assess-alert').style.display = 'none';
+  document.getElementById('tab-btn-assess').textContent = '📝 Assessments';
+  document.getElementById('as-result-1').innerHTML = `<div style="display:flex;align-items:center;gap:10px"><div class="score-bar" style="width:80px"><div class="score-fill" style="width:${score}%;background:linear-gradient(90deg,#059669,#10b981)"></div></div><span style="font-weight:800;color:#10b981;font-family:'Space Grotesk',sans-serif">${score}%</span></div>`;
+}
+
+// ── Camera / MediaRecorder ────────────────────────────────────────────────────
+let camPhase = 'idle'; // idle | ready | recording | done
+function enableCam() {
+  navigator.mediaDevices.getUserMedia({ video:true, audio:true })
+    .then(s => {
+      stream = s;
+      const v = document.getElementById('live-vid');
+      v.srcObject = s; v.style.display = 'block';
+      document.getElementById('vid-idle').style.display = 'none';
+      camPhase = 'ready';
+      document.getElementById('vid-btns').innerHTML = `<button class="p-btn danger" onclick="startRec()">⏺ Start Recording (max 2:00)</button>`;
+    })
+    .catch(() => {
+      const err = document.getElementById('cam-err');
+      err.style.display = 'block';
+      err.textContent = 'Camera access denied. Please allow camera and microphone access in your browser, then try again.';
+    });
+}
+function startRec() {
+  chunks = []; recTime = 0;
+  recorder = new MediaRecorder(stream);
+  recorder.ondataavailable = e => { if(e.data.size>0) chunks.push(e.data); };
+  recorder.onstop = () => {
+    const blob = new Blob(chunks, {type:'video/webm'});
+    const url  = URL.createObjectURL(blob);
+    const lv = document.getElementById('live-vid');
+    const pv = document.getElementById('play-vid');
+    lv.style.display = 'none';
+    pv.src = url; pv.style.display = 'block';
+    document.getElementById('rec-badge').style.display = 'none';
+    camPhase = 'done';
+    videoSaved = true;
+    updateNextBtn();
+    document.getElementById('vid-btns').innerHTML = `<button class="p-btn outline" onclick="retakeVid()">↺ Retake</button><button class="p-btn" onclick="useVid()">Use This Recording ✓</button>`;
+  };
+  recorder.start(200);
+  camPhase = 'recording';
+  document.getElementById('rec-badge').style.display = 'flex';
+  document.getElementById('vid-btns').innerHTML = `<button class="p-btn" style="background:#475569" onclick="stopRec()">⏹ Stop Recording</button>`;
+  recInterval = setInterval(() => {
+    recTime++;
+    document.getElementById('rec-timer').textContent = fmtSec(recTime);
+    if (recTime >= MAX_VIDEO_SEC) stopRec();
+  }, 1000);
+}
+function stopRec() {
+  clearInterval(recInterval);
+  if (recorder && recorder.state !== 'inactive') recorder.stop();
+}
+function retakeVid() {
+  videoSaved = false;
+  document.getElementById('play-vid').style.display = 'none';
+  document.getElementById('live-vid').style.display = 'block';
+  camPhase = 'ready';
+  document.getElementById('vid-btns').innerHTML = `<button class="p-btn danger" onclick="startRec()">⏺ Start Recording (max 2:00)</button>`;
+  updateNextBtn();
+}
+function useVid() { videoSaved = true; updateNextBtn(); }
+function stopStream() {
+  clearInterval(recInterval);
+  if (recorder && recorder.state !== 'inactive') recorder.stop();
+  if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+}
+function fmtSec(s) { const m=Math.floor(s/60); return m+':'+(s%60).toString().padStart(2,'0'); }
+</script>
+</body>
+</html>

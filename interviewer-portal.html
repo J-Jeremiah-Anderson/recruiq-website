@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Interviewer Portal — RecruIQ Demo</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="shared.css">
+<style>
+.portal-wrap { max-width: 1100px; margin: 0 auto; padding: 100px 24px 80px; }
+
+/* Demo banner */
+.demo-banner {
+  background: linear-gradient(90deg, rgba(99,102,241,0.12), rgba(79,70,229,0.06));
+  border: 1px solid rgba(99,102,241,0.3);
+  border-radius: 12px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: var(--text-dim);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.demo-banner .demo-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #818cf8;
+  background: rgba(99,102,241,0.12);
+  border: 1px solid rgba(99,102,241,0.3);
+  border-radius: 4px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+.demo-banner a { color: #a5b4fc; text-decoration: none; font-weight: 500; }
+.demo-banner a:hover { text-decoration: underline; }
+
+/* Portal header */
+.portal-header {
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 50%, #2563eb 100%);
+  border-radius: 16px;
+  padding: 28px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 0 60px -10px rgba(124,58,237,0.6);
+}
+.portal-header-left .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 6px;
+}
+.portal-header-left .name { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: #fff; }
+.portal-header-left .sub { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 4px; }
+.portal-header-right { text-align: right; }
+.portal-header-right .date-label { font-size: 11px; color: rgba(255,255,255,0.6); }
+.portal-header-right .date-val { font-weight: 700; color: #fff; font-size: 14px; margin-top: 2px; }
+.status-badge {
+  display: inline-block;
+  margin-top: 10px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Stats row */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 22px;
+}
+.stat-card .stat-label {
+  font-size: 11px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 8px;
+}
+.stat-card .stat-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Main layout */
+.portal-body {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* Interview list */
+.int-list { display: flex; flex-direction: column; gap: 8px; }
+.int-list-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: 'JetBrains Mono', monospace;
+  margin: 4px 0 6px;
+}
+.int-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: border-color 0.15s, background 0.15s;
+}
+.int-item:hover { border-color: rgba(124,58,237,0.4); background: rgba(124,58,237,0.05); }
+.int-item.active { border-color: rgba(124,58,237,0.55); background: rgba(124,58,237,0.08); }
+.int-item.dim { opacity: 0.7; }
+.int-item .cand-name { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.int-item .cand-role { font-size: 12px; color: var(--text-dim); margin-bottom: 8px; }
+.int-item .int-meta { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.type-badge {
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+.type-badge.upcoming { color: #38bdf8; background: rgba(14,165,233,0.12); }
+.type-badge.completed { color: #4ade80; background: rgba(22,163,74,0.12); }
+.int-date { font-size: 11px; color: var(--text-faint); }
+
+/* Detail panel */
+.detail-panel { display: flex; flex-direction: column; gap: 16px; }
+
+.detail-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 24px;
+}
+.detail-card h2 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+/* Interview header card */
+.int-header-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.int-header-card .cand-big { font-size: 20px; font-weight: 800; color: var(--text); }
+.int-header-card .cand-role-big { font-size: 13px; color: var(--text-dim); margin-top: 4px; }
+.int-header-card .meta-right { text-align: right; }
+.int-type-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 4px 14px;
+}
+.int-type-badge.upcoming { color: #38bdf8; background: rgba(14,165,233,0.12); border: 1px solid rgba(14,165,233,0.25); }
+.int-type-badge.completed { color: #4ade80; background: rgba(22,163,74,0.12); border: 1px solid rgba(22,163,74,0.25); }
+.int-datetime { font-size: 12px; color: var(--text-faint); margin-top: 8px; }
+
+/* Scorecard submitted */
+.sc-submitted { padding: 1.5rem 0; text-align: center; }
+.sc-submitted .check { font-size: 42px; margin-bottom: 12px; }
+.sc-submitted .sc-ok { font-size: 16px; font-weight: 700; color: #4ade80; margin-bottom: 6px; }
+.sc-submitted .sc-sub { font-size: 13px; color: var(--text-faint); }
+.sc-submitted .sc-edit-btn {
+  margin-top: 16px;
+  background: transparent;
+  border: 1px solid rgba(124,58,237,0.5);
+  color: #a78bfa;
+  border-radius: 8px;
+  padding: 7px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  transition: background 0.15s;
+}
+.sc-submitted .sc-edit-btn:hover { background: rgba(124,58,237,0.1); }
+
+/* Submitted scorecard view */
+.sc-view { display: flex; gap: 2rem; margin-bottom: 16px; flex-wrap: wrap; }
+.sc-view-block .sc-view-label { font-size: 11px; color: var(--text-faint); margin-bottom: 6px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.06em; }
+.stars { display: flex; gap: 3px; }
+.star { font-size: 20px; }
+.star.on { color: #f59e0b; }
+.star.off { color: rgba(255,255,255,0.12); }
+.rec-badge {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 2px 0;
+}
+.rec-badge.strong-hire { color: #4ade80; }
+.rec-badge.hire { color: #38bdf8; }
+.rec-badge.no-hire { color: #f87171; }
+.rec-badge.strong-no-hire { color: #ef4444; }
+
+.sc-notes-box {
+  font-size: 13px;
+  color: var(--text-dim);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  line-height: 1.65;
+}
+
+/* Scorecard form */
+.sc-form { display: flex; flex-direction: column; gap: 20px; }
+.sc-criteria-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.sc-criteria-label {
+  font-size: 13px;
+  color: var(--text-dim);
+  min-width: 140px;
+}
+.sc-stars { display: flex; gap: 5px; }
+.sc-star-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  color: var(--text-faint);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+  font-family: 'Space Grotesk', sans-serif;
+}
+.sc-star-btn.active {
+  background: rgba(124,58,237,0.25);
+  border-color: rgba(124,58,237,0.6);
+  color: #c4b5fd;
+}
+
+.rec-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+.rec-btn {
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.12s;
+  font-family: 'Space Grotesk', sans-serif;
+}
+.rec-btn:hover { border-color: rgba(124,58,237,0.35); color: var(--text); }
+.rec-btn.active-sh { background: rgba(22,163,74,0.14); border-color: rgba(22,163,74,0.45); color: #4ade80; }
+.rec-btn.active-h  { background: rgba(14,165,233,0.14); border-color: rgba(14,165,233,0.45); color: #38bdf8; }
+.rec-btn.active-nh { background: rgba(248,113,113,0.14); border-color: rgba(248,113,113,0.45); color: #f87171; }
+.rec-btn.active-snh { background: rgba(239,68,68,0.14); border-color: rgba(239,68,68,0.45); color: #ef4444; }
+
+.sc-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  resize: vertical;
+  min-height: 90px;
+  line-height: 1.55;
+  transition: border-color 0.15s;
+}
+.sc-textarea:focus { outline: none; border-color: rgba(124,58,237,0.5); }
+.sc-textarea::placeholder { color: var(--text-faint); }
+
+.submit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #7c3aed, #4f46e5);
+  color: #fff;
+  border: none;
+  border-radius: 9px;
+  padding: 10px 22px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  transition: opacity 0.15s;
+}
+.submit-btn:hover { opacity: 0.88; }
+
+/* Interview guide */
+.guide-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.guide-section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.guide-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-bottom: 10px;
+}
+.guide-item .arrow { color: #7c3aed; font-size: 14px; flex-shrink: 0; margin-top: 1px; line-height: 1.4; }
+.guide-item span { font-size: 13px; color: var(--text-dim); line-height: 1.55; }
+
+@media (max-width: 860px) {
+  .portal-body { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .guide-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .portal-wrap { padding: 80px 16px 60px; }
+  .stats-row { grid-template-columns: 1fr; }
+  .portal-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-dot"></span>
+      Recru<span style="color:var(--coral-bright)">IQ</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#product">Product</a></li>
+      <li><a href="index.html#how">How It Works</a></li>
+      <li><a href="compare.html">Compare</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="index.html#demos" style="color:var(--coral-bright)">Live Demos</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="index.html" class="btn btn-sm" style="border-color:transparent;background:transparent;">← Back</a>
+      <a href="candidate-portal.html" class="btn btn-primary btn-sm">Candidate Portal →</a>
+    </div>
+  </div>
+</nav>
+
+<div class="portal-wrap">
+
+  <!-- Demo banner -->
+  <div class="demo-banner">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span class="demo-tag">🎙️ Demo Mode</span>
+      <span>You're viewing the <strong style="color:var(--text)">Interviewer Portal</strong> — a live preview of the interviewer experience in RecruIQ.</span>
+    </div>
+    <a href="candidate-portal.html">Switch to Candidate Portal →</a>
+  </div>
+
+  <!-- Portal header -->
+  <div class="portal-header">
+    <div class="portal-header-left">
+      <div class="label">🎙️ Interviewer Portal</div>
+      <div class="name">Vikram Nair</div>
+      <div class="sub">Senior Technical Interviewer · Engineering</div>
+    </div>
+    <div class="portal-header-right">
+      <div class="date-label">Today</div>
+      <div class="date-val">May 27, 2026</div>
+      <div class="status-badge">Active</div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">Upcoming Interviews</div>
+      <div class="stat-value" style="color:#38bdf8">2</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Completed This Month</div>
+      <div class="stat-value" style="color:#4ade80">1</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Scorecards Pending</div>
+      <div class="stat-value" style="color:#fbbf24">2</div>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="portal-body">
+
+    <!-- Interview list -->
+    <div class="int-list" id="int-list">
+      <div class="int-list-label">Upcoming</div>
+      <button class="int-item active" onclick="selectInterview('priya')">
+        <div class="cand-name">Priya Sharma</div>
+        <div class="cand-role">Senior Frontend Engineer</div>
+        <div class="int-meta">
+          <span class="type-badge upcoming">Technical</span>
+          <span class="int-date">May 30 · 3:00 PM · 60 min</span>
+        </div>
+      </button>
+      <button class="int-item" onclick="selectInterview('sneha')">
+        <div class="cand-name">Sneha Iyer</div>
+        <div class="cand-role">Backend Engineer</div>
+        <div class="int-meta">
+          <span class="type-badge upcoming">System Design</span>
+          <span class="int-date">May 29 · 2:00 PM · 90 min</span>
+        </div>
+      </button>
+
+      <div class="int-list-label" style="margin-top:16px">Completed</div>
+      <button class="int-item dim" onclick="selectInterview('arjun')">
+        <div class="cand-name">Arjun Mehta</div>
+        <div class="cand-role">Product Manager</div>
+        <div class="int-meta">
+          <span class="type-badge completed">Behavioral</span>
+          <span class="int-date">May 27 · 11:00 AM</span>
+        </div>
+      </button>
+    </div>
+
+    <!-- Detail panel -->
+    <div class="detail-panel" id="detail-panel">
+      <!-- Filled by JS -->
+    </div>
+
+  </div>
+</div>
+
+<script>
+const INTERVIEWS = {
+  priya: {
+    name: 'Priya Sharma',
+    role: 'Senior Frontend Engineer',
+    type: 'Technical',
+    status: 'upcoming',
+    date: 'May 30, 2026',
+    time: '3:00 PM',
+    duration: '60 min',
+    scorecard: null,
+  },
+  sneha: {
+    name: 'Sneha Iyer',
+    role: 'Backend Engineer',
+    type: 'System Design',
+    status: 'upcoming',
+    date: 'May 29, 2026',
+    time: '2:00 PM',
+    duration: '90 min',
+    scorecard: null,
+  },
+  arjun: {
+    name: 'Arjun Mehta',
+    role: 'Product Manager',
+    type: 'Behavioral',
+    status: 'completed',
+    date: 'May 27, 2026',
+    time: '11:00 AM',
+    duration: '45 min',
+    scorecard: {
+      rating: 4,
+      recommendation: 'Strong Hire',
+      notes: 'Demonstrated excellent product instincts and clear communication. Strong sense of user empathy and data-driven decision making. Recommended for the role without reservations.',
+    },
+  },
+};
+
+const CRITERIA = ['Technical Skills', 'Communication', 'Problem Solving', 'Culture Fit', 'Leadership'];
+const RECOMMENDATIONS = ['Strong Hire', 'Hire', 'No Hire', 'Strong No Hire'];
+const REC_CLASS = { 'Strong Hire': 'active-sh', 'Hire': 'active-h', 'No Hire': 'active-nh', 'Strong No Hire': 'active-snh' };
+const REC_BADGE_CLASS = { 'Strong Hire': 'strong-hire', 'Hire': 'hire', 'No Hire': 'no-hire', 'Strong No Hire': 'strong-no-hire' };
+
+let current = 'priya';
+const formState = {
+  priya:  { scores: {}, rec: '', notes: '', submitted: false },
+  sneha:  { scores: {}, rec: '', notes: '', submitted: false },
+  arjun:  { scores: {}, rec: '', notes: '', submitted: false },
+};
+
+function selectInterview(key) {
+  current = key;
+  // Update list highlight
+  document.querySelectorAll('.int-item').forEach(btn => btn.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  render();
+}
+
+function render() {
+  const iv = INTERVIEWS[current];
+  const state = formState[current];
+  const panel = document.getElementById('detail-panel');
+
+  const statusClass = iv.status === 'upcoming' ? 'upcoming' : 'completed';
+
+  let html = `
+    <!-- Header card -->
+    <div class="detail-card">
+      <div class="int-header-card">
+        <div>
+          <div class="cand-big">${iv.name}</div>
+          <div class="cand-role-big">${iv.role}</div>
+        </div>
+        <div class="meta-right">
+          <span class="int-type-badge ${statusClass}">${iv.type} Interview</span>
+          <div class="int-datetime">${iv.date} · ${iv.time} · ${iv.duration}</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Submitted scorecard view
+  if (iv.scorecard) {
+    const stars = [1,2,3,4,5].map(n =>
+      `<span class="star ${n <= iv.scorecard.rating ? 'on' : 'off'}">★</span>`
+    ).join('');
+    html += `
+      <div class="detail-card">
+        <h2>Submitted Scorecard</h2>
+        <div class="sc-view">
+          <div class="sc-view-block">
+            <div class="sc-view-label">Rating</div>
+            <div class="stars">${stars}</div>
+          </div>
+          <div class="sc-view-block">
+            <div class="sc-view-label">Recommendation</div>
+            <div class="rec-badge ${REC_BADGE_CLASS[iv.scorecard.recommendation]}">${iv.scorecard.recommendation}</div>
+          </div>
+        </div>
+        <div class="sc-view-label" style="margin-bottom:8px">Notes</div>
+        <div class="sc-notes-box">${iv.scorecard.notes}</div>
+      </div>
+    `;
+  }
+
+  // Scorecard form for upcoming
+  if (iv.status === 'upcoming') {
+    if (state.submitted) {
+      html += `
+        <div class="detail-card">
+          <h2>Submit Scorecard</h2>
+          <div class="sc-submitted">
+            <div class="check">✅</div>
+            <div class="sc-ok">Scorecard submitted successfully</div>
+            <div class="sc-sub">The hiring team has been notified.</div>
+            <button class="sc-edit-btn" onclick="editScorecard('${current}')">Edit Scorecard</button>
+          </div>
+        </div>
+      `;
+    } else {
+      const criteriaRows = CRITERIA.map(c => {
+        const curScore = state.scores[c] || 0;
+        const btns = [1,2,3,4,5].map(n =>
+          `<button class="sc-star-btn${curScore >= n ? ' active' : ''}" onclick="setScore('${c}', ${n})">${n}</button>`
+        ).join('');
+        return `
+          <div class="sc-criteria-row">
+            <span class="sc-criteria-label">${c}</span>
+            <div class="sc-stars">${btns}</div>
+          </div>
+        `;
+      }).join('');
+
+      const recBtns = RECOMMENDATIONS.map(r =>
+        `<button class="rec-btn${state.rec === r ? ' ' + REC_CLASS[r] : ''}" onclick="setRec('${r}')">${r}</button>`
+      ).join('');
+
+      html += `
+        <div class="detail-card">
+          <h2>Submit Scorecard</h2>
+          <div class="sc-form">
+            <div>
+              <div class="guide-section-title" style="margin-bottom:12px">Rate each criterion (1–5)</div>
+              ${criteriaRows}
+            </div>
+            <div>
+              <div class="guide-section-title" style="margin-bottom:10px">Recommendation</div>
+              <div class="rec-buttons">${recBtns}</div>
+            </div>
+            <div>
+              <div class="guide-section-title" style="margin-bottom:8px">Interview Notes</div>
+              <textarea class="sc-textarea" id="sc-notes-${current}" placeholder="Summarise the interview, key observations, and any concerns…" oninput="setNotes(this.value)">${state.notes}</textarea>
+            </div>
+            <div>
+              <button class="submit-btn" onclick="submitScorecard()">Submit Scorecard →</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  // Interview guide
+  const guides = {
+    Technical: {
+      questions: ['Walk me through how you'd architect a scalable React app.', 'How do you handle state management in large frontends?', 'Describe a tricky bug you debugged in production.'],
+      assess: ['Depth of technical knowledge', 'Code quality and design instincts', 'Debugging and problem-solving approach'],
+    },
+    'System Design': {
+      questions: ['Design a URL shortener at scale.', 'How would you build a rate-limiter?', 'Walk me through a distributed caching strategy.'],
+      assess: ['Systems thinking and trade-off analysis', 'Scalability and reliability considerations', 'Communication of technical decisions'],
+    },
+    Behavioral: {
+      questions: ['Tell me about a complex problem you solved.', 'Describe a time you disagreed with a stakeholder.', 'How do you handle competing priorities?'],
+      assess: ['Product instinct and user empathy', 'Collaboration and communication', 'Growth mindset and adaptability'],
+    },
+  };
+  const guide = guides[iv.type] || guides.Behavioral;
+
+  const qItems = guide.questions.map(q =>
+    `<div class="guide-item"><span class="arrow">›</span><span>${q}</span></div>`
+  ).join('');
+  const aItems = guide.assess.map(a =>
+    `<div class="guide-item"><span class="arrow">›</span><span>${a}</span></div>`
+  ).join('');
+
+  html += `
+    <div class="detail-card">
+      <h2>Interview Guide</h2>
+      <div class="guide-grid">
+        <div>
+          <div class="guide-section-title">Suggested Questions</div>
+          ${qItems}
+        </div>
+        <div>
+          <div class="guide-section-title">Things to Assess</div>
+          ${aItems}
+        </div>
+      </div>
+    </div>
+  `;
+
+  panel.innerHTML = html;
+}
+
+function setScore(criterion, val) {
+  formState[current].scores[criterion] = val;
+  render();
+}
+
+function setRec(val) {
+  formState[current].rec = val;
+  render();
+}
+
+function setNotes(val) {
+  formState[current].notes = val;
+}
+
+function submitScorecard() {
+  formState[current].submitted = true;
+  render();
+}
+
+function editScorecard(key) {
+  formState[key].submitted = false;
+  render();
+}
+
+// Initial render
+render();
+</script>
+<script src="shared.js"></script>
+</body>
+</html>
